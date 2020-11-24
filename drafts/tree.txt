@@ -1,0 +1,15 @@
+.
+|-- about.md
+|-- archives.md
+|-- drafts
+|   |-- CANME
+|   |-- config.tomlbak
+|   |-- how\ to\ mangage\ your\ content.md
+|   `-- how\ to\ setup\ soft-router\ on\ your\ openWRT.md
+|-- posts
+|   |-- learnR
+|   |-- life
+|   `-- play
+`-- tree.txt
+
+5 directories, 7 files

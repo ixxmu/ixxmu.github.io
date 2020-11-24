@@ -1,0 +1,110 @@
+baseURL = "https://blog.kkitown.top"
+languageCode = "en-us"
+title = "小可的博客"
+theme = "hugo-theme-noteworthy"
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+publishDir = "docs"
+
+enableRobotsTXT = true
+paginate = 4 # Set the number of posts to show before overflowing to the next page.
+summaryLength = 0 # Configure how long the post summary should be on the homepage.
+hasCJKLanguage = true
+# Add your Google Analytics identifier: UA-XXXXXXXX-X
+googleAnalytics = "" 
+
+# Add your Disqus shortname here.
+disqusShortname = "kkitown"    
+
+[taxonomies]
+  tag = "tags"
+
+[author]
+	name = "kimcc"
+
+# Set to false to disallow raw HTML in markdown files
+[markup.goldmark.renderer]
+    unsafe = true
+
+[params]
+    description = "记录文字的地方"
+
+    # options for highlight.js (version, additional languages, and theme)
+    highlightjsVersion = "9.12.0"
+    highlightjsCDN = "//cdnjs.cloudflare.com/ajax/libs"
+    highlightjsLang = ["r", "yaml"]
+    highlightjsTheme = "github"
+
+    MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
+    MathJaxVersion = "2.7.5"
+
+    # path to the favicon, under "static"
+    favicon = "favicon.ico"
+
+    [params.logo]
+    url = "logo.png"
+    width = 50
+    height = 50
+    alt = "Logo"
+
+	math = true
+	# Blog description at the top of the homepage. Supports markdown.
+	
+    showReadMore = false
+
+   # Set enableKofi to true to enable the Ko-fi support button. Add your Ko-fi ID to link to your account.
+    enableKofi = false
+    kofi = ""
+
+	# Add links to your accounts. Remove the ones you don't want to include.
+	# Main
+	  youtube = "#"
+	# Writing
+	   wordpress = "#"
+  # Creative & Visual
+	  flickr = "#"
+  # Programming
+    github = "#"
+  # Academic
+    googlescholar = "#"
+
+# Menu links along the sidebar navigation.
+[[menu.main]]
+	identifier = "about"
+	name = "关于"
+	url = "/about/"
+	weight = 3 # Weight is an integer used to sort the menu items. The sorting goes from smallest to largest numbers. If weight is not defined for each menu entry, Hugo will sort the entries alphabetically.
+
+[[menu.main]]
+	identifier = "tags"
+	name = "标签"
+	url = "/tags/"
+	weight = 2
+
+[[menu.main]]
+	name = "文章"
+	identifier = "archives"
+	url = "/archives/"
+	weight = 1
+
+# Privacy configurations: https://gohugo.io/about/hugo-and-gdpr/
+[privacy]
+  [privacy.disqus]
+    disable = false
+  [privacy.googleAnalytics]
+    anonymizeIP = true
+    disable = false
+    respectDoNotTrack = false
+    useSessionStorage = false
+  [privacy.instagram]
+    disable = false
+    simple = false
+  [privacy.twitter]
+    disable = false
+    enableDNT = false
+    simple = false
+  [privacy.vimeo]
+    disable = false
+    simple = false
+  [privacy.youtube]
+    disable = false
+    privacyEnhanced = true

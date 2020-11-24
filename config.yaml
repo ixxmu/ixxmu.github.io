@@ -1,0 +1,88 @@
+baseURL: /
+languageCode: en-us
+title: Noteworthy
+theme: hugo-theme-noteworthy
+relativeurls: true
+ignoreErrors: ["error-remote-getjson"]
+ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
+enableRobotsTXT: yes
+paginate: 4
+summaryLength: 10
+googleAnalytics: ''
+disqusShortname: ''
+taxonomies:
+  tag: tags
+author:
+  name: kimcc
+markup:
+  goldmark:
+    renderer:
+      unsafe: yes
+params:
+  behance: '#'
+  blogger: '#'
+  codepen: '#'
+  description: Noteworthy is a minimalist Hugo theme, perfect for writers and bloggers.
+  deviantart: '#'
+  dribbble: '#'
+  email: '#'
+  enableKofi: no
+  facebook: '#'
+  flickr: '#'
+  github: '#'
+  gitlab: '#'
+  googlescholar: '#'
+  impactstory: '#'
+  instagram: '#'
+  kofi: ''
+  linkedin: '#'
+  math: yes
+  medium: '#'
+  orcid: '#'
+  pinterest: '#'
+  reddit: '#'
+  showReadMore: no
+  soundcloud: '#'
+  stackoverflow: '#'
+  tumblr: '#'
+  twitter: '#'
+  vimeo: '#'
+  vk: '#'
+  weibo: '#'
+  wordpress: '#'
+  youtube: '#'
+menu:
+  main:
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 1
+    - identifier: tags
+      name: Tags
+      url: /tags/
+      weight: 2
+    - identifier: archives
+      name: Archives
+      url: /archives/
+      weight: 3
+privacy:
+  disqus:
+    disable: no
+  googleAnalytics:
+    anonymizeIP: yes
+    disable: no
+    respectDoNotTrack: no
+    useSessionStorage: no
+  instagram:
+    disable: no
+    simple: no
+  twitter:
+    disable: no
+    enableDNT: no
+    simple: no
+  vimeo:
+    disable: no
+    simple: no
+  youtube:
+    disable: no
+    privacyEnhanced: yes

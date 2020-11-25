@@ -8,7 +8,7 @@ ssh-keygen -t rsa -b 4096 -C &quot;xxx@gmail.com&quot;  # 记得替换成你的�
 </code></pre><p>再打开你的github，进入配置页, Settings &ndash; SSH and GPG keys 添加你用<em>cat id_rsa.pub</em>查看内容并粘贴保存即可。</p><h4 id=从github拉取特定的文件或文件夹>从Github拉取特定的文件或文件夹</h4><pre><code class=language-{bash} data-lang={bash}>git init test &amp;&amp; cd test     # 新建仓库并进入文件夹
 git config core.sparsecheckout true # 设置允许克隆子目录
 echo 'content/*' &gt;&gt; .git/info/sparse-checkout # 引号内可以设置要拉取的位置
-git remote add origin git@github.com:ixxmu/ixxmu.github.io.source.git
+git remote add origin git@github.com:yourID/yourID.github.io.source.git
 git pull origin master 
 ssh-keygen -t rsa -C &quot;xxx@gmail.com&quot;
 </code></pre><p>修改完成之后，你就可以正常的操作了；</p><pre><code class=language-{bash} data-lang={bash}>git add .

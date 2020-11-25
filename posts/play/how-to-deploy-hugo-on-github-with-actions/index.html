@@ -16,10 +16,8 @@ devtools::install_github(&quot;rstudio/blogdown&quot;)
 blogdown::install_hugo()
 blogdown::hugo_version()
 # 0.78.2
-</code></pre><p>两次新建，分先后顺序，分别为</p><h6 id=新建1>新建1</h6><p>File -> New Project -> Version Control -> Git -> Repository URL
-Repository URL 请在你的源码仓库查看，一般为形如 <a href=https://github.com/yourID/yourID.github.io.source.git>https://github.com/yourID/yourID.github.io.source.git</a> 的地址，Project Directry name 可以为空；</p><h6 id=新建2>新建2</h6><p>File -> New Project -> New Directory -> Website using blogdown -> Directory name
-Directory name 不能为空，需要填入自定位的文件夹名称，如001，Hugo Theme 位置填入提前看好的Hugo主题的github位置，如 <a href=https://github.com/olOwOlo/hugo-theme-even>https://github.com/olOwOlo/hugo-theme-even</a> 就填入 olOwOlo/hugo-theme-even，其他默认即可。</p><p>然后用Rstudio上的Build按钮查看拥有even主题的Hugo博客。</p><h5 id=211-hugo博客中-configyaml-文件设置>2.1.1 Hugo博客中 config.yaml 文件设置</h5><p>主页的修改以及调整都依赖于config.yaml文件，以下修改为大多数情况下会用到的修改，其他具体请参看对应Hugo主题的配置说明</p><pre><code class=language-{bash} data-lang={bash}>baseURL: /
-  languageCode: zh-cn #en-us
+</code></pre><p>两次新建，分先后顺序，分别为</p><h5 id=新建1>新建1</h5><blockquote><p>File -> New Project -> Version Control -> Git -> Repository URL</p></blockquote><p>Repository URL 请在你的源码仓库查看，一般为形如 <a href=https://github.com/yourID/yourID.github.io.source.git>https://github.com/yourID/yourID.github.io.source.git</a> 的地址，Project Directry name 可以为空；</p><h5 id=新建2>新建2</h5><blockquote><p>File -> New Project -> New Directory -> Website using blogdown -> Directory name</p></blockquote><p>Directory name 不能为空，需要填入自定位的文件夹名称，如001，Hugo Theme 位置填入提前看好的Hugo主题的github位置，如 <a href=https://github.com/olOwOlo/hugo-theme-even>https://github.com/olOwOlo/hugo-theme-even</a> 就填入 olOwOlo/hugo-theme-even，其他默认即可。</p><p>然后用Rstudio上的Build按钮查看拥有even主题的Hugo博客。</p><h5 id=211-hugo博客中-configyaml-文件设置>2.1.1 Hugo博客中 config.yaml 文件设置</h5><p>主页的修改以及调整都依赖于config.yaml文件，以下修改为大多数情况下会用到的修改，其他具体请参看对应Hugo主题的配置说明</p><pre><code class=language-{bash} data-lang={bash}>baseURL: /
+languageCode: zh-cn #en-us
 title: xx的博客
 theme: hugo-theme-even
 relativeurls: true 
@@ -40,10 +38,10 @@ echo 'theme = &quot;beautifulhugo&quot;' &gt;&gt; config.tomlecho 'theme = &quot
 
 # 此时你就可以运行预览效果
 hugo serve
-</code></pre><h4 id=23-上传本地调试好的hugo博客>2.3 上传本地调试好的Hugo博客</h4><pre><code class=language-{bash} data-lang={bash}>git add .
+</code></pre><h3 id=3-上传本地调试好的hugo博客>3. 上传本地调试好的Hugo博客</h3><pre><code class=language-{bash} data-lang={bash}>git add .
 git commit -m &quot;first commit&quot;
 git push -u origin master
-</code></pre><h4 id=24-发布自动化>2.4 发布自动化</h4><p>前往 yourID.github.io.source 源码仓库配置Actions，
+</code></pre><h3 id=4-设置github-actions-自动化发布>4. 设置Github Actions 自动化发布</h3><p>前往 yourID.github.io.source 源码仓库配置Actions，
 Actions -> New workflow
 直接将以下文件贴进去，修改远程仓库即可，其他的基本上不用更新;</p><pre><code class=language-{bash} data-lang={bash}>name: Deploy Hugo Site to Github Pages on Master Branch
 

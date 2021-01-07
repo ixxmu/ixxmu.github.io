@@ -78,7 +78,7 @@ zp3 &lt;- zp3 + coord_equal()
 library(plotly)
 fig &lt;- ggplotly(zp3) # 这个R包也是棒呆
 fig
-</code></pre><p>执行完以上代码你会发现有个chull 函数，他就是用来统计数据的凸点的位置；参数支持两个拥有两个列的一组数据或者或者两个向量，就是这个函数支持数据框的前两列；这里是满足PCA结果单作图要求的；</p><pre><code class=language-{r} data-lang={r}># chull 函数，统计边界点的值；貌似很有用
+</code></pre><div align=center><img src=https://i.imgur.com/sZMjFz0.png width=80% alt=heatmap align=center></div><p><img src alt=sZMjFz0></p><p>执行完以上代码你会发现有个 <strong>chull</strong> 函数，他就是用来统计数据的凸点的位置；参数支持两个拥有两个列的一组数据或者或者两个向量，就是这个函数支持数据框的前两列,这里是满足PCA结果单作图要求的；</p><pre><code class=language-{r} data-lang={r}># chull 函数，统计边界点的值；貌似很有用
 # NOT RUN {
 X &lt;- matrix(stats::rnorm(2000), ncol = 2)
 chull(X)
@@ -107,6 +107,12 @@ zp3 &lt;- p3 +stat_ellipse(geom=&quot;polygon&quot;, aes(fill = group),
                level = 0.95,
                type = &quot;norm&quot;)
 zp3
+ggplotly(zp3)
+
+&lt;div  align=&quot;center&quot;&gt;    
+&lt;img src=&quot;https://i.imgur.com/lQAxIrb.png&quot; width = &quot;80%&quot; alt=&quot;heatmap&quot; align=center /&gt;
+&lt;/div&gt;
+
 #感兴趣的试试不同参数的圈地范围吧
 p3 + stat_ellipse(type = &quot;t&quot;)
 p3 + stat_ellipse(type = &quot;norm&quot;)

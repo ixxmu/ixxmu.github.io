@@ -174,7 +174,19 @@ commit_message: ${{ github.event.head_commit.message }}
 换电脑换环境了怎么，我要重新做一遍么？？？</p>
 <p>其实到这里还有一个非常重要的技能点，用git命令行只更新content文件内容，只对特定文件或文件夹进行pull或者push操作，这样我就可以真正在云端写内容了！</p>
 <p>来看一看效果吧,顺便看下另一篇文章吧，会有收获的！</p>
-<h5 id=reference>Reference：</h5>
+<h4 id=补充-未来如何更新你的主题><em>补充：</em> 未来如何更新你的主题？</h4>
+<p>最简单的方式是克隆你的博客source code 到本地，然后手动删除主题文件夹，再次拉取主题的Github文件即可。
+可能你在Rstudio下的blogdown下预览不成功，但是不要紧，进入public文件夹，直接打开index.html能正常打开预览到博客即可上传你的主题更新；</p>
+<pre><code class=language-{bash} data-lang={bash}>git clone https://github.com/kimcc/hugo-theme-noteworthy.git themes/hugo-theme-noteworthy
+</code></pre><h4 id=补充-如何回退到指定版本的git><em>补充：</em> 如何回退到指定版本的git？</h4>
+<p>打开你项目的 GitHub commit 主页，知道你要回退的commit版本，
+然后命令行操作；</p>
+<pre><code class=language-{bash} data-lang={bash}>git log
+git reset --hard &lt;commit ID&gt;
+git push -f origin master
+# git push -f origin &lt;branch name&gt;
+
+</code></pre><h5 id=reference>Reference：</h5>
 <ol>
 <li><a href=https://cloud.tencent.com/developer/article/1647964>https://cloud.tencent.com/developer/article/1647964</a></li>
 <li><a href=https://www.jianshu.com/p/5aa60433850a>https://www.jianshu.com/p/5aa60433850a</a></li>

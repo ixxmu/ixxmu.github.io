@@ -63,15 +63,14 @@ ssh-keygen -t rsa -b 4096 -C &quot;xxx@gmail.com&quot;  # 记得替换成你的�
 <pre><code class=language-{bash} data-lang={bash}>git init test &amp;&amp; cd test     # 新建仓库并进入文件夹
 git config core.sparsecheckout true # 设置允许克隆子目录
 echo 'content/*' &gt;&gt; .git/info/sparse-checkout # 引号内可以设置要拉取的位置
-git remote add origin 
-# git@github.com:yourID/yourID.github.io.source.git
+# git remote add origin git@github.com:yourID/yourID.github.io.source.git
 git remote add origin ssh://git@github.com/username/repository.git
-git config pull.rebase false
-git pull origin master 
+git config pull.rebase false # 会有提醒让你设置
+git pull origin main 
 </code></pre><p>修改完成之后，你就可以正常的操作了；</p>
 <pre><code class=language-{bash} data-lang={bash}>git add .
 git commit -m &quot;conts&quot;
-git push -u origin master
+git push -u origin main
 </code></pre><h5 id=reference>Reference：</h5>
 <ol>
 <li><a href=https://www.jianshu.com/p/dd3be8cb5b90>https://www.jianshu.com/p/dd3be8cb5b90</a></li>

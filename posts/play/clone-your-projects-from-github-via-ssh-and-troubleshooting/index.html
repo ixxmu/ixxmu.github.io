@@ -4,28 +4,27 @@
 <meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=format-detection content="telephone=no">
-<title>折腾 | 小可的博客</title>
-<link rel=apple-touch-icon sizes=180x180 href=../../apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=../../favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=../../favicon-16x16.png>
-<link rel=manifest href=../../manifest.json>
-<link rel=mask-icon href=../../safari-pinned-tab.svg color=#ff3db4>
+<title>给 Github 添加 ssh 连接方式并排错 | 小可的博客</title>
+<link rel=apple-touch-icon sizes=180x180 href=../../../apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=../../../favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=../../../favicon-16x16.png>
+<link rel=manifest href=../../../manifest.json>
+<link rel=mask-icon href=../../../safari-pinned-tab.svg color=#ff3db4>
 <meta name=theme-color content="#ffffff">
-<link rel=stylesheet href=../../css/main.min.7f48fb61d97a236c01a3d2327f63d7bc0f1b5da94c7eb37c0e7b8f0a7847b715.css>
-<link rel=alternate type=application/rss+xml href=../../categories/%E6%8A%98%E8%85%BE/index.xml title=小可的博客>
+<link rel=stylesheet href=../../../css/main.min.7f48fb61d97a236c01a3d2327f63d7bc0f1b5da94c7eb37c0e7b8f0a7847b715.css>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-204903359-1','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script></head>
 <body>
 <nav>
 <header>
 <div class=site-title>
-<a href=../../>小可的博客</a>
+<a href=../../../>小可的博客</a>
 </div>
 </header>
 <div class=nav-menu>
-<a class="color-link nav-link" href=../../archives/>文章</a>
-<a class="color-link nav-link" href=../../tags/>标签</a>
-<a class="color-link nav-link" href=../../about/>关于</a>
-<a class="color-link nav-link" href=../../index.xml target=_blank rel=noopener type=application/rss+xml>RSS</a>
+<a class="color-link nav-link" href=../../../archives/>文章</a>
+<a class="color-link nav-link" href=../../../tags/>标签</a>
+<a class="color-link nav-link" href=../../../about/>关于</a>
+<a class="color-link nav-link" href=../../../index.xml target=_blank rel=noopener type=application/rss+xml>RSS</a>
 </div>
 <footer class=footer>
 <div class=social-icons>
@@ -40,154 +39,119 @@
 </div>
 <p><a href=https://github.com/kimcc/hugo-theme-noteworthy target=_blank rel=noopener>Noteworthy theme</a></p>
 <p><a href=https://gohugo.io target=_blank rel=noopener>Built with Hugo</a></p>
-<script src=../../js/main.min.c1aee25a817e9beb1f9c4afd9d62311227a7f5e46720e404dc1dda97281f47f2.js integrity="sha256-wa7iWoF+m+sfnEr9nWIxEien9eRnIOQE3B3alygfR/I=" crossorigin=anonymous></script>
+<script src=../../../js/main.min.c1aee25a817e9beb1f9c4afd9d62311227a7f5e46720e404dc1dda97281f47f2.js integrity="sha256-wa7iWoF+m+sfnEr9nWIxEien9eRnIOQE3B3alygfR/I=" crossorigin=anonymous></script>
 </footer>
 </nav>
 <div id=content class=content-container>
-<h1>Tagged "折腾"</h1>
-<article>
-<h2>
-<a href=../../posts/play/clone-your-projects-from-github-via-ssh-and-troubleshooting/>
-给 Github 添加 ssh 连接方式并排错
-</a>
-</h2>
+<h1 class=post-title>给 Github 添加 ssh 连接方式并排错</h1>
+<time>发表于 August 19, 2021 分类于
+<span id=categories>
+<a style=color:#ababab href=../../../categories/%E6%8A%98%E8%85%BE>折腾</a>
+</span>
+</time>
 <div>
+<p>
 <p>Github放弃了账号密码的验证方式，所以需要重新设定链接方式。</p>
-<p><a href=../../posts/play/clone-your-projects-from-github-via-ssh-and-troubleshooting/>Read more...</a></p>
+<p>为何要有此一折腾？</p>
+<ol>
+<li>Github 在08月15日彻底丢弃了账号密码验证的登录方式，之前的账号密码验证方式失效;</li>
+<li>因为本身是在Rstudio上建目录，所以用的是普通用户，不是root账户，root账户下按照网上教程没有任何问题,<br>
+普通用户就是无法成功clone项目，因为必须用普通用户所以得搞定；</li>
+<li>之前不愿意多看几步学习，这不来补课了。</li>
+</ol>
+<blockquote>
+<h5 id=标准添加方式暂时不表可以参看文章后半部分>标准添加方式暂时不表,可以参看文章后半部分</h5>
+</blockquote>
+<h3 id=记录排错过程>记录排错过程</h3>
+<p>按以上流程正常添加SSH之后，但是无法正常克隆项目到本地，使用
+ssh -T <a href=mailto:git@github.com>git@github.com</a> 能显示正常连接，但就是无法clone项目本地，
+错误信息如下：</p>
+<pre><code class=language-{bash} data-lang={bash}>git clone git@github.com:username/repository.git
+</code></pre><blockquote>
+<p>Cloning into &lsquo;xxx&rsquo;&mldr;
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+Please make sure you have the correct access rights
+and the repository exists.</p>
+</blockquote>
+<p>提示权限不够，尝试了重新添加SSH key，解决.ssh 相关文件夹或文件权限以及其他网上提供的几乎任何解法，然后搞了快三天，（幸好疫情受困单位不介意封闭在家）</p>
+<p>最后终于在**<a href=https://stackoverflow.com/questions/23766153/git-clone-ssh-permission-denied>这里</a>**发现了问题出现在哪里了；</p>
+<p>仔细看下面的三个链接；</p>
+<blockquote>
+<ol>
+<li>git clone ssh://github.com/username/repository.git # 链接1</li>
+<li>git clone ssh://git@github.com/username/repository.git # 链接2</li>
+<li>git clone <a href=mailto:git@github.com>git@github.com</a>:username/repository.git # 链接3</li>
+</ol>
+</blockquote>
+<p>链接1题主说不能正常使用的链接，提示错误和我的一模一样；然后我就对着拿了链接2试了试，竟然clone成功了；</p>
+<p>我一开始用的链接是链接3形式的命令，且高票答案里的说是正常可用的链接，但是我这里就是通不过，可能以后会发现更好的解法？</p>
+<p>然后用<strong>链接2</strong>形式命令进行操作一切正常了，内心几千万只小马奔腾！！！</p>
+<p>主要问题解决了，还有另外一个问题就是我之前建立的项目如何在本地文件不动的情况下正常更新到Github？</p>
+<p>搜了一番之后就是改HTTPS链接成SSH的形式； 注意后面的链接形式，只有这个才可以；</p>
+<pre><code class=language-{bash} data-lang={bash}>git remote set-url origin ssh://git@github.com/username/repository.git
+#可能会用到
+git add -A
+git commit -m &quot;up_breaking&quot;
+git config --global push.default current
+git push -u origin master
+</code></pre><p>然后就成功了更新到 Github 了，终于搞定，虽然还有未完成的新坑，但是起码 Github 可用了。</p>
+<p>发现Github 的token验证方式也可以用R包实现链接，随后补上！</p>
+<h5 id=以下可能会用到命令>以下可能会用到命令</h5>
+<pre><code class=language-{bash} data-lang={bash}># 给普通用户添加sudo权限
+usermod -a -G sudo user
+# 或者
+usermod -a -G wheel user
+# 给config文件权限
+sudo chmod 600 config
+</code></pre><hr>
+<h3 id=github-设置-ssh-链接>Github 设置 SSH 链接</h3>
+<p>登陆到你的用户
+设置你的 GitHub，</p>
+<pre><code class=language-{bash} data-lang={bash}>git config --list
+git config --global user.name &quot;ixxmu&quot;
+git config --global user.email &quot;jjliulangjj@gmail.com&quot;
+# 生成 SSH 密钥，
+ssh-keygen -t rsa -b 4096 -C &quot;jjliulangjj@gmail.com&quot;
+# 添加私钥到你的当前运行环境（添加到此session）
+eval &quot;$(ssh-agent -s)&quot;
+ssh-add ~/.ssh/id_rsa
+# 进入到 .ssh 文件夹，查看刚生成的公钥，
+cd .ssh
+ls -a
+cat id_rsa.pub
+cd #回到当前用户根目录
+</code></pre><p><strong>复制公钥</strong>后转到 Github 网站上操作，找到你的个人 Settings ， 在 SSH and GPG keys 选项里添加你的SSH key ，</p>
+<p>将你复制的公钥添加在SSH选项里面，title 任意填写即可，如 vps_user1;此时回到你的命令窗口
+输入以下命令即可链接你的SSH；</p>
+<pre><code class=language-{bash} data-lang={bash}>ssh -T git@github.com
+# ssh -vT git@github.com 
+</code></pre><p>出现以下提示信息说明你已经正常链接到Github，下面你就可以正常的操作你的Github项目了.</p>
+<blockquote>
+<p>Hi xxxx! You&rsquo;ve successfully authenticated, but GitHub does not provide shell access.</p>
+</blockquote>
+<p>不出意外的话你可以继续像往常一样操作你的项目了，当然如果不成功，
+请1根据窗口内的提示信息解决问题或者 2 往上看排错过程；</p>
+<p>参考链接：</p>
+<ol>
+<li><a href=https://stackoverflow.com/questions/23401652/fatal-the-current-branch-master-has-no-upstream-branch>fatal: The current branch master has no upstream branch</a></li>
+<li><a href=https://www.jianshu.com/p/0406cf5701e8>ssh-key git多账户配置</a></li>
+</ol>
+</p>
 </div>
-<div class=post-footer>
-<time>August 19, 2021</time>
+<div class=page-footer>
+<hr class=footer-divider>
+<a class=tag href=../../../tags/ssh>#SSH</a>
+<a class=tag href=../../../tags/github>#Github</a>
+<a class=tag href=../../../tags/git>#Git</a>
 </div>
-</article>
-<article>
-<h2>
-<a href=../../posts/play/how-to-build-openwrt-using-github-action/>
-用 Github actions 编译任意路由器固件
-</a>
-</h2>
-<div>
-<p>给Glinet-MT-300Nv2编译最新xray固件</p>
-<p><a href=../../posts/play/how-to-build-openwrt-using-github-action/>Read more...</a></p>
-</div>
-<div class=post-footer>
-<time>April 9, 2021</time>
-</div>
-</article>
-<article>
-<h2>
-<a href=../../posts/play/how-to-git-clone-special-folder-or-file/>
-如何克隆指定文件夹到本地
-</a>
-</h2>
-<div>
-<p>为什么会有此篇操作，对，我就是想要写博客再更爽一点。</p>
-<p><a href=../../posts/play/how-to-git-clone-special-folder-or-file/>Read more...</a></p>
-</div>
-<div class=post-footer>
-<time>November 24, 2020</time>
-</div>
-</article>
-<article>
-<h2>
-<a href=../../posts/play/how-to-deploy-hugo-on-github-with-actions/>
-如何用Github actions部署Hugo博客到gh-pages
-</a>
-</h2>
-<div>
-<p>其实这是一篇重建博客的文章，新的方式只为更稳定更快更方便更少的调试。</p>
-<p><a href=../../posts/play/how-to-deploy-hugo-on-github-with-actions/>Read more...</a></p>
-</div>
-<div class=post-footer>
-<time>November 24, 2020</time>
-</div>
-</article>
-<article>
-<h2>
-<a href=../../posts/play/addons-and-extensions-often-used-in-my-edge-or-chrome-browsers/>
-浏览器常用插件
-</a>
-</h2>
-<div>
-<p>插件不在多，在于顺手； 鉴于对Chrome和Edge的热爱，以下插件除非表明，否则都是在两个浏览器中通用的</p>
-<p><a href=../../posts/play/addons-and-extensions-often-used-in-my-edge-or-chrome-browsers/>Read more...</a></p>
-</div>
-<div class=post-footer>
-<time>July 21, 2020</time>
-</div>
-</article>
-<article>
-<h2>
-<a href=../../posts/play/how-to-setup-a-boundless-network-in-raspberry-3b/>
-软路由_树莓派3B设置
-</a>
-</h2>
-<div>
-<p>树莓派3B充当旁路由，吃灰未拆封的3B感觉要派上用场了^_^</p>
-<p><a href=../../posts/play/how-to-setup-a-boundless-network-in-raspberry-3b/>Read more...</a></p>
-</div>
-<div class=post-footer>
-<time>July 14, 2020</time>
-</div>
-</article>
-<article>
-<h2>
-<a href=../../posts/play/how-to-install-your-r-packages-quickly/>
-迁移并重新部署R包
-</a>
-</h2>
-<div>
-<p>备份升级R迁移R包并不靠谱，Rstudio 自带的Jobs工具很不好用，所以就重新安装一遍几乎所有的R包；</p>
-<p><a href=../../posts/play/how-to-install-your-r-packages-quickly/>Read more...</a></p>
-</div>
-<div class=post-footer>
-<time>June 17, 2020</time>
-</div>
-</article>
-<article>
-<h2>
-<a href=../../posts/play/how-to-mangage-your-content-via-blog-and-github/>
-重建博客并恢复
-</a>
-</h2>
-<div>
-<p>记录恢复博客的过程；博客假设在Github上存放于docs文件夹内，同时使用 Rstudio+Blogdown 书写 内容会随着时间失效！！！</p>
-<p><a href=../../posts/play/how-to-mangage-your-content-via-blog-and-github/>Read more...</a></p>
-</div>
-<div class=post-footer>
-<time>June 5, 2020</time>
-</div>
-</article>
-<article>
-<h2>
-<a href=../../posts/play/deal-with-git-big-file-error/>
-git 大文件错误
-</a>
-</h2>
-<div>
-<p>git 大文件 真垃圾,只能在 .</p>
-<p><a href=../../posts/play/deal-with-git-big-file-error/>Read more...</a></p>
-</div>
-<div class=post-footer>
-<time>April 14, 2020</time>
-</div>
-</article>
-<article>
-<h2>
-<a href=../../posts/play/deploy-your-blogs-on-github-through-blogdown/>
-部署并安装博客写作环境
-</a>
-</h2>
-<div>
-<p>终于部署了写作环境，之前也知道hugo、jeklly、typeecho 或者 wordpress 等写作工具，当然也有微信公众号，但是一直懒着没能找到合适的动力去把他们彻底部署出来，虽然日常会使用trello等记录工具，但是长文字工具能长期保存在自留地的却没有，所以也算是终于部署成系列吧，会坚持写或者记录下去。</p>
-<p><a href=../../posts/play/deploy-your-blogs-on-github-through-blogdown/>Read more...</a></p>
-</div>
-<div class=post-footer>
-<time>April 8, 2020</time>
-</div>
-</article>
-<link rel=stylesheet type=text/css href=../../css/katex.min.css crossorigin=anonymous>
-<script type=text/javascript src=../../js/katex.min.js crossorigin=anonymous></script>
-<script type=text/javascript src=../../js/auto-render.min.js onload=renderMathInElement(document.body) crossorigin=anonymous></script>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//kkitown.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+<link rel=stylesheet type=text/css href=../../../css/katex.min.css crossorigin=anonymous>
+<script type=text/javascript src=../../../js/katex.min.js crossorigin=anonymous></script>
+<script type=text/javascript src=../../../js/auto-render.min.js onload=renderMathInElement(document.body) crossorigin=anonymous></script>
 </div>
 <footer class=footer-mobile>
 <div class=social-icons>
@@ -205,7 +169,7 @@ git 大文件错误
 <span class=divider-bar>|</span>
 <p><a href=https://gohugo.io target=_blank rel=noopener>Built with Hugo</a></p>
 </div>
-<script src=../../js/main.min.c1aee25a817e9beb1f9c4afd9d62311227a7f5e46720e404dc1dda97281f47f2.js integrity="sha256-wa7iWoF+m+sfnEr9nWIxEien9eRnIOQE3B3alygfR/I=" crossorigin=anonymous></script>
+<script src=../../../js/main.min.c1aee25a817e9beb1f9c4afd9d62311227a7f5e46720e404dc1dda97281f47f2.js integrity="sha256-wa7iWoF+m+sfnEr9nWIxEien9eRnIOQE3B3alygfR/I=" crossorigin=anonymous></script>
 </footer>
 </body>
 </html>

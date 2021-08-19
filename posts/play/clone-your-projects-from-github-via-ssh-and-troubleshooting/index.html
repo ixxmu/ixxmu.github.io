@@ -94,10 +94,10 @@ and the repository exists.</p>
 git add -A
 git commit -m &quot;up_breaking&quot;
 git config --global push.default current
-git push -u origin master
+git push -u origin main
 </code></pre><p>然后就成功了更新到 Github 了，终于搞定，虽然还有未完成的新坑，但是起码 Github 可用了。</p>
 <p>发现Github 的token验证方式也可以用R包实现链接，随后补上！</p>
-<h5 id=以下可能会用到命令>以下可能会用到命令</h5>
+<h4 id=以下可能会用到的命令>以下可能会用到的命令</h4>
 <pre><code class=language-{bash} data-lang={bash}># 给普通用户添加sudo权限
 usermod -a -G sudo user
 # 或者

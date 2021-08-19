@@ -4,7 +4,7 @@
 <meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=format-detection content="telephone=no">
-<title>FPKM RPKM TPM counts | 小可的博客</title>
+<title>给 Github 添加 ssh 连接方式并排错 | 小可的博客</title>
 <link rel=apple-touch-icon sizes=180x180 href=../../../apple-touch-icon.png>
 <link rel=icon type=image/png sizes=32x32 href=../../../favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=../../../favicon-16x16.png>
@@ -43,54 +43,103 @@
 </footer>
 </nav>
 <div id=content class=content-container>
-<h1 class=post-title>FPKM RPKM TPM counts</h1>
-<time>June 5, 2020</time>
+<h1 class=post-title>给 Github 添加 ssh 连接方式并排错</h1>
+<time>August 19, 2021</time>
 <div>
 <p>
-<link href=2020-06-05-fpkm-rpkm-tpm-和counts_files/anchor-sections/anchor-sections.css rel=stylesheet>
-<script src=2020-06-05-fpkm-rpkm-tpm-和counts_files/anchor-sections/anchor-sections.js></script>
-<p>记录标准化的概念以及一些步骤；理解加上收集</p>
-<p>参考阅读：
-<a href=https://www.jieandze1314.com/post/cnposts/normalization-method/>跟着刘小泽一起回顾标准化方法</a>
-<a href=https://www.jianshu.com/p/9dfb65e405e8>fpkm转化成tpm</a>
-<a href=https://mp.weixin.qq.com/s/_DtkxSfLGQHcRju66J4yTQ>RNAseq数据，下载GEO中的FPKM文件后该怎么下游分析</a>
-<a href=https://mp.weixin.qq.com/s/3qnCaAiEPup9RrclxalSig>标准化进行时</a></p>
-<p>一般测序拿到的数据都是fpkm值，进行下游差异分析需要先将其转化为tpm再进行limma差异分析；转化为tpm之后仍需要判断是否对数据进行log标准化；</p>
-<pre class={r}#><code>#一众转换函数
-countToTpm &lt;- function(counts, effLen)
-{
-    rate &lt;- log(counts) - log(effLen)
-    denom &lt;- log(sum(exp(rate)))
-    exp(rate - denom + log(1e6))
-}
-countToFpkm &lt;- function(counts, effLen)
-{
-    N &lt;- sum(counts)
-    exp( log(counts) + log(1e9) - log(effLen) - log(N) )
-}
-fpkmToTpm &lt;- function(fpkm)
-{
-    exp(log(fpkm) - log(sum(fpkm)) + log(1e6))
-}
-
-countToEffCounts &lt;- function(counts, len, effLen)
-{
-    counts * (len / effLen)
-}</code></pre>
-<pre class={r}#><code>#计算TPM值，只需要用一下apply函数
-tpms &lt;- apply(expMatrix,2,fpkmToTpm)
-tpms[1:3,]
-#最后可以根据TPM的特征进行检查，看每列加和是否一致
-colSums(tpms)</code></pre>
-<pre class={r}#><code>判断数据是否需要转换，果子的经验是10以内不需要
-exprSet &lt;- log2(exprSet+1)</code></pre>
-<p>TPM值对总和应该是一致的，所以可以在此基础上对基因的表达量进行差异比较；虽然不是真的精确。</p>
+<p>Github放弃了账号密码的验证方式，所以需要重新设定链接方式。</p>
+<p>为何要有此一折腾？</p>
+<ol>
+<li>Github 在08月15日彻底丢弃了账号密码验证的登录方式，之前的账号密码验证方式失效;</li>
+<li>因为本身是在Rstudio上建目录，所以用的是普通用户，不是root账户，root账户下按照网上教程没有任何问题,<br>
+普通用户就是无法成功clone项目，因为必须用普通用户所以得搞定；</li>
+<li>之前不愿意多看几步学习，这不来补课了。</li>
+</ol>
+<blockquote>
+<h5 id=标准添加方式暂时不表可以参看文章后半部分>标准添加方式暂时不表,可以参看文章后半部分</h5>
+</blockquote>
+<h3 id=记录排错过程>记录排错过程</h3>
+<p>按以上流程正常添加SSH之后，但是无法正常克隆项目到本地，使用
+ssh -T <a href=mailto:git@github.com>git@github.com</a> 能显示正常连接，但就是无法clone项目本地，
+错误信息如下：</p>
+<pre><code class=language-{bash} data-lang={bash}>git clone git@github.com:username/repository.git
+</code></pre><blockquote>
+<p>Cloning into &lsquo;xxx&rsquo;&mldr;
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+Please make sure you have the correct access rights
+and the repository exists.</p>
+</blockquote>
+<p>提示权限不够，尝试了重新添加SSH key，解决.ssh 相关文件夹或文件权限以及其他网上提供的几乎任何解法，然后搞了快三天，（幸好疫情受困单位不介意封闭在家）</p>
+<p>最后终于在**<a href=https://stackoverflow.com/questions/23766153/git-clone-ssh-permission-denied>这里</a>**发现了问题出现在哪里了；</p>
+<p>仔细看下面的三个链接；</p>
+<blockquote>
+<ol>
+<li>git clone ssh://github.com/username/repository.git # 链接1</li>
+<li>git clone ssh://git@github.com/username/repository.git # 链接2</li>
+<li>git clone <a href=mailto:git@github.com>git@github.com</a>:username/repository.git # 链接3</li>
+</ol>
+</blockquote>
+<p>链接1题主说不能正常使用的链接，提示错误和我的一模一样；然后我就对着拿了链接2试了试，竟然clone成功了；</p>
+<p>我一开始用的链接是链接3形式的命令，且高票答案里的说是正常可用的链接，但是我这里就是通不过，可能以后会发现更好的解法？</p>
+<p>然后用<strong>链接2</strong>形式命令进行操作一切正常了，内心几千万只小马奔腾！！！</p>
+<p>主要问题解决了，还有另外一个问题就是我之前建立的项目如何在本地文件不动的情况下正常更新到Github？</p>
+<p>搜了一番之后就是改HTTPS链接成SSH的形式； 注意后面的链接形式，只有这个才可以；</p>
+<pre><code class=language-{bash} data-lang={bash}>git remote set-url origin ssh://git@github.com/username/repository.git
+#可能会用到
+git add -A
+git commit -m &quot;up_breaking&quot;
+git config --global push.default current
+git push -u origin master
+</code></pre><p>然后就成功了更新到 Github 了，终于搞定，虽然还有未完成的新坑，但是起码 Github 可用了。</p>
+<p>发现Github 的token验证方式也可以用R包实现链接，随后补上！</p>
+<h5 id=以下可能会用到命令>以下可能会用到命令</h5>
+<pre><code class=language-{bash} data-lang={bash}># 给普通用户添加sudo权限
+usermod -a -G sudo user
+# 或者
+usermod -a -G wheel user
+# 给config文件权限
+sudo chmod 600 config
+</code></pre><hr>
+<h3 id=github-设置-ssh-链接>Github 设置 SSH 链接</h3>
+<p>登陆到你的用户
+设置你的 GitHub，</p>
+<pre><code class=language-{bash} data-lang={bash}>git config --list
+git config --global user.name &quot;ixxmu&quot;
+git config --global user.email &quot;jjliulangjj@gmail.com&quot;
+# 生成 SSH 密钥，
+ssh-keygen -t rsa -b 4096 -C &quot;jjliulangjj@gmail.com&quot;
+# 添加私钥到你的当前运行环境（添加到此session）
+eval &quot;$(ssh-agent -s)&quot;
+ssh-add ~/.ssh/id_rsa
+# 进入到 .ssh 文件夹，查看刚生成的公钥，
+cd .ssh
+ls -a
+cat id_rsa.pub
+cd #回到当前用户根目录
+</code></pre><p><strong>复制公钥</strong>后转到 Github 网站上操作，找到你的个人 Settings ， 在 SSH and GPG keys 选项里添加你的SSH key ，</p>
+<p>将你复制的公钥添加在SSH选项里面，title 任意填写即可，如 vps_user1;此时回到你的命令窗口
+输入以下命令即可链接你的SSH；</p>
+<pre><code class=language-{bash} data-lang={bash}>ssh -T git@github.com
+# ssh -vT git@github.com 
+</code></pre><p>出现以下提示信息说明你已经正常链接到Github，下面你就可以正常的操作你的Github项目了.</p>
+<blockquote>
+<p>Hi xxxx! You&rsquo;ve successfully authenticated, but GitHub does not provide shell access.</p>
+</blockquote>
+<p>不出意外的话你可以继续像往常一样操作你的项目了，当然如果不成功，
+请1根据窗口内的提示信息解决问题或者 2 往上看排错过程；</p>
+<p>参考链接：</p>
+<ol>
+<li><a href=https://stackoverflow.com/questions/23401652/fatal-the-current-branch-master-has-no-upstream-branch>fatal: The current branch master has no upstream branch</a></li>
+<li><a href=https://www.jianshu.com/p/0406cf5701e8>ssh-key git多账户配置</a></li>
+</ol>
 </p>
 </div>
 <div class=page-footer>
 <hr class=footer-divider>
-<a class=tag href=../../../tags/r>#R</a>
-<a class=tag href=../../../tags/%E6%A0%87%E5%87%86%E5%8C%96>#标准化</a>
+<a class=tag href=../../../tags/ssh>#SSH</a>
+<a class=tag href=../../../tags/github>#Github</a>
+<a class=tag href=../../../tags/git>#Git</a>
 </div>
 <div id=disqus_thread></div>
 <script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//kkitown.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>

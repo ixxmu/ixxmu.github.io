@@ -44,11 +44,7 @@
 </nav>
 <div id=content class=content-container>
 <h1 class=post-title>如何克隆指定文件夹到本地</h1>
-<time>发表于 November 24, 2020 分类于
-<span id=categories>
-<a style=color:#ababab href=../../../categories/%E6%8A%98%E8%85%BE>折腾</a>
-</span>
-</time>
+<time>November 24, 2020</time>
 <div>
 <p>
 <p>为什么会有此篇操作，对，我就是想要写博客再更爽一点。</p>
@@ -63,18 +59,20 @@ ssh-keygen -t rsa -b 4096 -C &quot;xxx@gmail.com&quot;  # 记得替换成你的�
 <pre><code class=language-{bash} data-lang={bash}>git init test &amp;&amp; cd test     # 新建仓库并进入文件夹
 git config core.sparsecheckout true # 设置允许克隆子目录
 echo 'content/*' &gt;&gt; .git/info/sparse-checkout # 引号内可以设置要拉取的位置
-git remote add origin git@github.com:yourID/yourID.github.io.source.git
+git remote add origin 
+# git@github.com:yourID/yourID.github.io.source.git
+git remote add origin ssh://git@github.com/username/repository.git
+git config pull.rebase false
 git pull origin master 
-ssh-keygen -t rsa -C &quot;xxx@gmail.com&quot;
 </code></pre><p>修改完成之后，你就可以正常的操作了；</p>
 <pre><code class=language-{bash} data-lang={bash}>git add .
 git commit -m &quot;conts&quot;
 git push -u origin master
 </code></pre><h5 id=reference>Reference：</h5>
-<ul>
+<ol>
 <li><a href=https://www.jianshu.com/p/dd3be8cb5b90>https://www.jianshu.com/p/dd3be8cb5b90</a></li>
 <li><a href=https://www.jianshu.com/p/39e01bca31fe>https://www.jianshu.com/p/39e01bca31fe</a></li>
-</ul>
+</ol>
 </p>
 </div>
 <div class=page-footer>

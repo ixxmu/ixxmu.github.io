@@ -63,6 +63,7 @@ Copyright
 </time>
 <div>
 <p>
+<p>记录下如何修改R包自带函数</p>
 <p>修改R包自带函数，并将其回归到变量环境；
 其实是从<a href=https://www.jianshu.com/p/80244f3bcca7>周运来的文章</a>中看到的，就记录下来了，因为一定会有这个需求；
 原文中更改了estimate中的函数，当然我也认为这个自带函数很烦人类，就是不知道如何操作它，这不来了</p>
@@ -132,7 +133,8 @@ myimmu.LncRNA &lt;- edit(ImmuLncRNA::immu.LncRNA)
 
 &gt;
 environment(myimmu.LncRNA) &lt;-  environment(ImmuLncRNA::immu.LncRNA)
-&gt;</code></pre>
+&gt;
+</code></pre>
 </p>
 </div>
 <div class=page-footer>

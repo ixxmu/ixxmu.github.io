@@ -67,7 +67,7 @@ Copyright
 <p>修改R包自带函数，并将其回归到变量环境；
 其实是从<a href=https://www.jianshu.com/p/80244f3bcca7>周运来的文章</a>中看到的，就记录下来了，因为一定会有这个需求；
 原文中更改了estimate中的函数，当然我也认为这个自带函数很烦人类，就是不知道如何操作它，这不来了</p>
-<pre><code>myfilterCommonGenes &lt;- edit(estimate::filterCommonGenes)
+<pre tabindex=0><code>myfilterCommonGenes &lt;- edit(estimate::filterCommonGenes)
 function (input.f, output.f, id = c(&quot;GeneSymbol&quot;, &quot;EntrezID&quot;)) 
 {
     stopifnot((is.character(input.f) &amp;&amp; length(input.f) == 1 &amp;&amp; 

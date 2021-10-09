@@ -66,13 +66,13 @@ Copyright
 <p>为什么会有此篇操作，对，我就是想要写博客再更爽一点。</p>
 <p>两部分，第一先设定自己机器到 SSH keys 并提交到自己的Github上，第二步就是设定想要拉取的特定文件或文件；</p>
 <h4 id=设定本机-ssh-keys-并提交到-github>设定本机 SSH keys 并提交到 Github</h4>
-<pre><code class=language-{bash} data-lang={bash}>git config --global  --list
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git config --global  --list
 git config --global user.name &quot;xxx&quot; # 你的github用户名
 git config --global user.email &quot;xxx@gmail.com&quot; # 你的github邮箱
 ssh-keygen -t rsa -b 4096 -C &quot;xxx@gmail.com&quot;  # 记得替换成你的邮箱
 </code></pre><p>再打开你的github，进入配置页, Settings &ndash; SSH and GPG keys 添加你用<em>cat id_rsa.pub</em>查看内容并粘贴保存即可。</p>
 <h4 id=从github拉取特定的文件或文件夹>从Github拉取特定的文件或文件夹</h4>
-<pre><code class=language-{bash} data-lang={bash}>git init test &amp;&amp; cd test     # 新建仓库并进入文件夹
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git init test &amp;&amp; cd test     # 新建仓库并进入文件夹
 git config core.sparsecheckout true # 设置允许克隆子目录
 echo 'content/*' &gt;&gt; .git/info/sparse-checkout # 引号内可以设置要拉取的位置
 # git remote add origin git@github.com:yourID/yourID.github.io.source.git
@@ -80,7 +80,7 @@ git remote add origin ssh://git@github.com/username/repository.git
 git config pull.rebase false # 会有提醒让你设置
 git pull origin main 
 </code></pre><p>修改完成之后，你就可以正常的操作了；</p>
-<pre><code class=language-{bash} data-lang={bash}>git add .
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git add .
 git commit -m &quot;conts&quot;
 git push -u origin main
 </code></pre><h5 id=reference>Reference：</h5>

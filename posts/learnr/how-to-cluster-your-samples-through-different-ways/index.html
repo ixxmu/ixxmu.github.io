@@ -72,46 +72,46 @@ Copyright
 1.<em>直接方法</em> 设置一些适合的划分标准，比如elbow和average silhouette法
 2.<em>统计检验方法</em> 就是常用的假设检验方法，比如gap statistic</p>
 </blockquote>
-<pre><code class=language-{r}# data-lang={r}#># 如果因为缺少某些包而安装失败，请先安装其他依赖包再重新安装，安装时间比较久
+<pre tabindex=0><code class=language-{r}# data-lang={r}#># 如果因为缺少某些包而安装失败，请先安装其他依赖包再重新安装，安装时间比较久
 # 可能需要依赖lme4，cowplot，ggpubr，FactoMineR
 # 其中cowplot需要R3.3版本，其他版本可以试试用下面命令安装
 devtools::install_url(&quot;https://github.com/wilkelab/cowplot/archive/1.0.0.zip&quot;)
 if(!require(devtools)) install.packages('devtools')
 if(!require(factoextra)) devtools::install_github('kassambara/factoextra')
-</code></pre><pre><code class=language-{r}# data-lang={r}#>#如果已经安装，跳过即可
+</code></pre><pre tabindex=0><code class=language-{r}# data-lang={r}#>#如果已经安装，跳过即可
 pkgs &lt;- c(&quot;cluster&quot;,  &quot;NbClust&quot;)
 install.packages(pkgs)
 </code></pre><p>载入R包</p>
-<pre><code class=language-{r}# data-lang={r}#>library(factoextra)
+<pre tabindex=0><code class=language-{r}# data-lang={r}#>library(factoextra)
 library(cluster)
 library(NbClust)
 </code></pre><p>准备数据</p>
-<pre><code class=language-{r}# data-lang={r}#>data(iris)
+<pre tabindex=0><code class=language-{r}# data-lang={r}#>data(iris)
 head(iris)
-</code></pre><pre><code class=language-{r}# data-lang={r}#># remove species column
+</code></pre><pre tabindex=0><code class=language-{r}# data-lang={r}#># remove species column
 iris.scaled = scale(iris[,-5]) #scale 注意行 列，scale是对列进行操作
 head(iris.scaled)
 </code></pre><h2 id=1-三种聚类方法>1. 三种聚类方法</h2>
 <h3 id=11-k-means-和-pama>1.1 k-means() 和 pama()</h3>
 <p>这里演示了stat包中的k-means()，cluster包中的pama()的使用，把上面的归一化后的数据分成3个cluster。</p>
-<pre><code class=language-{r}# data-lang={r}#># K-means clustering
+<pre tabindex=0><code class=language-{r}# data-lang={r}#># K-means clustering
 set.seed(123)
 km.res = kmeans(iris.scaled, 3, nstart=25)
 # k-means  group number of each observation
 str(km.res)
 km.res$cluster
-</code></pre><pre><code class=language-{r}# data-lang={r}#># visualize k-means result
+</code></pre><pre tabindex=0><code class=language-{r}# data-lang={r}#># visualize k-means result
 fviz_cluster(km.res, data=iris.scaled, geom='point', stand=FALSE, ellipse.type='convex')
 # convex / norm
-</code></pre><pre><code class=language-{r}# data-lang={r}#># PAM clustering
+</code></pre><pre tabindex=0><code class=language-{r}# data-lang={r}#># PAM clustering
 pam.res = pam(iris.scaled, 3)
 # str(pam.res)
 pam.res$cluster
-</code></pre><pre><code class=language-{r}# data-lang={r}#># visualize pam clusters
+</code></pre><pre tabindex=0><code class=language-{r}# data-lang={r}#># visualize pam clusters
 fviz_cluster(pam.res, stand=FALSE, geom='point', ellipse.type = 'norm')
 </code></pre><h3 id=12-hclust>1.2 hclust()</h3>
 <p>另一个是R中内建的方法hclust():</p>
-<pre><code class=language-{r}# data-lang={r}#># 计算两两间的距离，计算方法比较多，这里选择欧几里德距离
+<pre tabindex=0><code class=language-{r}# data-lang={r}#># 计算两两间的距离，计算方法比较多，这里选择欧几里德距离
 dist.res = dist(iris.scaled, method='euclidean')
 # 进行层次聚类，不同的算法说明可以查看函数帮助信息
 hc = hclust(dist.res, method='complete')
@@ -119,7 +119,7 @@ hc = hclust(dist.res, method='complete')
 plot(hc, labels=FALSE, hang=-1, xlab='hclust')
 # 为3个group添加方框，原来还有这个函数，真神奇
 rect.hclust(hc, k=3, border=2:4)
-</code></pre><pre><code class=language-{r}# data-lang={r}#># 把层次聚类的结果分成3组 
+</code></pre><pre tabindex=0><code class=language-{r}# data-lang={r}#># 把层次聚类的结果分成3组 
 hc.cut = cutree(hc,k=3)
 hc.cut
 </code></pre><h2 id=2-确定最佳分组数目的3种方法>2. 确定最佳分组数目的3种方法</h2>
@@ -133,7 +133,7 @@ hc.cut
 2.对每个k值，计算每个组的组内平方各（within-cluster sum of square）的和
 3.绘制k值和组内平方和的总和的趋势图
 4.从图上的转折点确定最佳分组数目</p>
-<pre><code class=language-{r}# data-lang={r}#>#用kmeans看看
+<pre tabindex=0><code class=language-{r}# data-lang={r}#>#用kmeans看看
 set.seed(123)  
 # k值从2到15
 k.max = 15
@@ -148,14 +148,14 @@ plot(1:k.max, wss,
 abline(v=3, lty=2)
 </code></pre><p>从上面的图，可以看出在k=3这个点上，曲线的变化率比较大，建议选择k=3作为最终的结果。当然你还可以看到k越大，组内平方和总和是越来越小，不过随着k变大，分类结果也更加分散，可能不能很好的表现数据聚类想要表达的信息。</p>
 <p>也可以直接利用一个叫factoextra的R包来实现，使用它的提供的fviz_nbclust()函数</p>
-<pre><code class=language-{r}# data-lang={r}#># fviz_nbclust(x,FUNcluster,method=c('silhourtte','wss'))
+<pre tabindex=0><code class=language-{r}# data-lang={r}#># fviz_nbclust(x,FUNcluster,method=c('silhourtte','wss'))
 fviz_nbclust(iris.scaled, kmeans, method='wss') + geom_vline(xintercept = 3, linetype=2)
 
 # 这里貌似不能直接给出一个推荐值，需要我们自己从图中寻找一个，也就是k=3
 </code></pre><p>下面试试用PAM聚类的结果进行测试</p>
-<pre><code class=language-{r}# data-lang={r}#>fviz_nbclust(iris.scaled, pam, method='wss') + geom_vline(xintercept = 3, linetype=2)
+<pre tabindex=0><code class=language-{r}# data-lang={r}#>fviz_nbclust(iris.scaled, pam, method='wss') + geom_vline(xintercept = 3, linetype=2)
 </code></pre><p>最终结果也和k-means的聚类结果类似。最后再试试用层次聚类的结果来试试看。使用factoextra提供的 hcut对数据进行聚类并划分分组</p>
-<pre><code class=language-{r}# data-lang={r}#>fviz_nbclust(iris.scaled, hcut, method='wss') + geom_vline(xintercept = 3, linetype=2)
+<pre tabindex=0><code class=language-{r}# data-lang={r}#>fviz_nbclust(iris.scaled, hcut, method='wss') + geom_vline(xintercept = 3, linetype=2)
 </code></pre><p>如果数据比较复杂的话，Elbow method可能会陷入局部最优的结果，随着k的增大，wss反而又增大的情况。</p>
 <h3 id=22-average-silhouette-method>2.2 Average silhouette method</h3>
 <p>简单来说，该主方法用于评估聚类结果的质量。如果一个聚类的结果比较好，那么它的average silhouette就会比较高。计算过程类似Elbow method：</p>
@@ -166,7 +166,7 @@ fviz_nbclust(iris.scaled, kmeans, method='wss') + geom_vline(xintercept = 3, lin
 1.以k为x轴，avg.sil为y轴绘制连线图
 1.avg.sil值最大处就是最优k值</p>
 <p>具体的R执行代码可以利用cluster包中的silhouette()函数计算average silhouette值。先看看在K-means聚类中的使用</p>
-<pre><code class=language-{r} data-lang={r}>library(cluster)
+<pre tabindex=0><code class=language-{r} data-lang={r}>library(cluster)
 k.max = 15
 data = iris.scaled
 sil = rep(0, k.max)
@@ -180,11 +180,11 @@ for (i in 2:k.max){
 plot(1:k.max, sil, type='b', pch=19, frame=FALSE, xlab='Number of clusters k')
 abline(v=which.max(sil), lty=2)
 </code></pre><p>使用前面用到的fviz_nbclust()完成</p>
-<pre><code class=language-{r} data-lang={r}>fviz_nbclust(iris.scaled, kmeans, method='silhouette') #所以说这函数 标准化的数据、聚类方法和聚类评价方式
+<pre tabindex=0><code class=language-{r} data-lang={r}>fviz_nbclust(iris.scaled, kmeans, method='silhouette') #所以说这函数 标准化的数据、聚类方法和聚类评价方式
 </code></pre><p>下面再介绍在PAM和层次聚类中使用</p>
-<pre><code class=language-{r} data-lang={r}># for PAM clustering  
+<pre tabindex=0><code class=language-{r} data-lang={r}># for PAM clustering  
 fviz_nbclust(iris.scaled, pam, method='silhouette')
-</code></pre><pre><code class=language-{r} data-lang={r}># for hierarchical clustering
+</code></pre><pre tabindex=0><code class=language-{r} data-lang={r}># for hierarchical clustering
 fviz_nbclust(iris.scaled, hcut, method='silhouette',hc_method='complete')
 </code></pre><p>讨论:前面介绍的Elbow method得到的最佳值，需要我们手动去看，而Average silhouette method会直接提供一个最佳以供选择。而且K-means和PAM的推荐值是k=2，而层次聚类的推荐值是k=3。结合之前的Elbow method结果，设置k=3比较好。</p>
 <h3 id=23-gap-statistic-method>2.3 Gap statistic method</h3>
@@ -198,20 +198,20 @@ fviz_nbclust(iris.scaled, hcut, method='silhouette',hc_method='complete')
 选择满足$Gap(k) \ge Gap(k+1) - s_{k+1}$的最小k值</p>
 </blockquote>
 <p>R语言里面的实现方法可以利用cluster包中的 clusGap()来计算</p>
-<pre><code class=language-{r} data-lang={r}># clusGap(x, FUNcluster, K.max, B = 100, verbose = TRUE, ...)  
+<pre tabindex=0><code class=language-{r} data-lang={r}># clusGap(x, FUNcluster, K.max, B = 100, verbose = TRUE, ...)  
 </code></pre><p>对3种聚类方法进行测试：</p>
-<pre><code class=language-{r} data-lang={r}>library(cluster)
+<pre tabindex=0><code class=language-{r} data-lang={r}>library(cluster)
 set.seed(123)
 # 一般认为B=500就能得到一个比较好的结果，这里设为50以提高计算速度
 gap_stat = clusGap(iris.scaled, FUN=kmeans, nstart=25, K.max=10, B=50)
 print(gap_stat, method='firstmax')
-</code></pre><pre><code class=language-{r} data-lang={r}># 绘图
+</code></pre><pre tabindex=0><code class=language-{r} data-lang={r}># 绘图
 plot(gap_stat, frame=FALSE, xlab='Number of cluster k')
 abline(v=3, lty=2)
-</code></pre><pre><code class=language-{r} data-lang={r}># 使用factoextra
+</code></pre><pre tabindex=0><code class=language-{r} data-lang={r}># 使用factoextra
 fviz_gap_stat(gap_stat)
 </code></pre><p>这里的最佳聚类数目是用firstmax方法（查看 ?cluster::maxSE）计算的，Tibshirani et al (2001)提出的方法可以参考下面脚本：</p>
-<pre><code class=language-{r} data-lang={r}># Print
+<pre tabindex=0><code class=language-{r} data-lang={r}># Print
 print(gap_stat, method = &quot;Tibs2001SEmax&quot;)
 # Plot
 fviz_gap_stat(gap_stat, 
@@ -220,12 +220,12 @@ fviz_gap_stat(gap_stat,
 fviz_gap_stat(gap_stat, 
           maxSE = list(method = &quot;Tibs2001SEmax&quot;, SE.factor = 2))
 </code></pre><p>PAM和层次聚类的结果</p>
-<pre><code class=language-{r} data-lang={r}># PAM聚类结果 
+<pre tabindex=0><code class=language-{r} data-lang={r}># PAM聚类结果 
 set.seed(123)
 gap_stat &lt;- clusGap(iris.scaled, FUN = pam, K.max = 10, B = 50)
 # Plot gap statistic
 fviz_gap_stat(gap_stat)
-</code></pre><pre><code class=language-{r} data-lang={r}># Compute gap statistic
+</code></pre><pre tabindex=0><code class=language-{r} data-lang={r}># Compute gap statistic
 set.seed(123)
 gap_stat &lt;- clusGap(iris.scaled, FUN = hcut, K.max = 10, B = 50)
 # Plot gap statistic

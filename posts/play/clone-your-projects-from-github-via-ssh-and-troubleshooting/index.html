@@ -78,7 +78,7 @@ Copyright
 <p>按以上流程正常添加SSH之后，但是无法正常克隆项目到本地，使用
 ssh -T <a href=mailto:git@github.com>git@github.com</a> 能显示正常连接，但就是无法clone项目本地，
 错误信息如下：</p>
-<pre><code class=language-{bash} data-lang={bash}>git clone git@github.com:username/repository.git
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git clone git@github.com:username/repository.git
 </code></pre><blockquote>
 <p>Cloning into &lsquo;xxx&rsquo;&mldr;
 Permission denied (publickey).
@@ -101,7 +101,7 @@ and the repository exists.</p>
 <p>然后用<strong>链接2</strong>形式命令进行操作一切正常了，内心几千万只小马奔腾！！！</p>
 <p>主要问题解决了，还有另外一个问题就是我之前建立的项目如何在本地文件不动的情况下正常更新到Github？</p>
 <p>搜了一番之后就是改HTTPS链接成SSH的形式； 注意后面的链接形式，只有这个才可以；</p>
-<pre><code class=language-{bash} data-lang={bash}>git remote set-url origin ssh://git@github.com/username/repository.git
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git remote set-url origin ssh://git@github.com/username/repository.git
 #可能会用到
 git add -A
 git commit -m &quot;up_breaking&quot;
@@ -110,7 +110,7 @@ git push -u origin main
 </code></pre><p>然后就成功了更新到 Github 了，终于搞定，虽然还有未完成的新坑，但是起码 Github 可用了。</p>
 <p>发现Github 的token验证方式也可以用R包实现链接，随后补上！</p>
 <h4 id=以下可能会用到的命令>以下可能会用到的命令</h4>
-<pre><code class=language-{bash} data-lang={bash}># 给普通用户添加sudo权限
+<pre tabindex=0><code class=language-{bash} data-lang={bash}># 给普通用户添加sudo权限
 usermod -a -G sudo user
 # 或者
 usermod -a -G wheel user
@@ -120,7 +120,7 @@ sudo chmod 600 config
 <h3 id=github-设置-ssh-链接>Github 设置 SSH 链接</h3>
 <p>登陆到你的用户
 设置你的 GitHub，</p>
-<pre><code class=language-{bash} data-lang={bash}>git config --list
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git config --list
 git config --global user.name &quot;ixxmu&quot;
 git config --global user.email &quot;jjliulangjj@gmail.com&quot;
 # 生成 SSH 密钥，
@@ -136,7 +136,7 @@ cd #回到当前用户根目录
 </code></pre><p><strong>复制公钥</strong>后转到 Github 网站上操作，找到你的个人 Settings ， 在 SSH and GPG keys 选项里添加你的SSH key ，</p>
 <p>将你复制的公钥添加在SSH选项里面，title 任意填写即可，如 vps_user1;此时回到你的命令窗口
 输入以下命令即可链接你的SSH；</p>
-<pre><code class=language-{bash} data-lang={bash}>ssh -T git@github.com
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>ssh -T git@github.com
 # ssh -vT git@github.com 
 </code></pre><p>出现以下提示信息说明你已经正常链接到Github，下面你就可以正常的操作你的Github项目了.</p>
 <blockquote>

@@ -72,19 +72,19 @@ Copyright
 <h3 id=2-安装设置docker>2 安装设置docker</h3>
 <p><a href=https://mlapp.cn/376.html>参考文章</a>
 先开启混杂模式，鉴别你的网卡id</p>
-<pre><code class=language-{r} data-lang={r}>sudo ip link set **eth0** promisc on
+<pre tabindex=0><code class=language-{r} data-lang={r}>sudo ip link set **eth0** promisc on
 ip addr 
 </code></pre><p>查看ip设置,如 10.211.55.3/24，根据自己的ip进行更改</p>
-<pre><code class=language-{r} data-lang={r}>docker network create -d macvlan --subnet=10.211.55.3/24 --gateway=10.211.55.1 -o parent=eth0 macnet 
+<pre tabindex=0><code class=language-{r} data-lang={r}>docker network create -d macvlan --subnet=10.211.55.3/24 --gateway=10.211.55.1 -o parent=eth0 macnet 
 </code></pre><p>获取docker的名称 sulinggg/openwrt:x86_64 ，运行docker</p>
-<pre><code class=language-{r} data-lang={r}>docker run --restart always --name openwrt -d --network macnet --privileged sulinggg/openwrt:x86_64 /sbin/init 
+<pre tabindex=0><code class=language-{r} data-lang={r}>docker run --restart always --name openwrt -d --network macnet --privileged sulinggg/openwrt:x86_64 /sbin/init 
 </code></pre><p>进入容器，修改相应参数，注意识别不同docker镜像命令可能不一样</p>
-<pre><code class=language-{r} data-lang={r}>docker exec -it openwrt bash
+<pre tabindex=0><code class=language-{r} data-lang={r}>docker exec -it openwrt bash
 #sudo docker exec -it openwrt /bin/sh
-</code></pre><pre><code class=language-{r} data-lang={r}>cat /etc/config/network
+</code></pre><pre tabindex=0><code class=language-{r} data-lang={r}>cat /etc/config/network
 vi /etc/config/network
 </code></pre><p>具体打开看参照美丽应用的设置即可</p>
-<pre><code class=language-{r} data-lang={r}>/etc/init.d/network restart
+<pre tabindex=0><code class=language-{r} data-lang={r}>/etc/init.d/network restart
 </code></pre><p>这一步结束之后，你的旁路由大概离已经可以运行了，但是你会发现打开国内网站速度的时候慢的不行，包括淘宝京东优酷等，具体设置接着往下看；</p>
 <h3 id=3-旁路由设置>3 旁路由设置</h3>
 <p>这一步包括3个点</p>
@@ -101,7 +101,7 @@ vi /etc/config/network
 <p>安装 portainer，非必须，树莓派爱好者镜像核一些openwrt是自带docker和portainer管理工具的；
 docker run -d &ndash;name portainer-01 &ndash;restart unless-stopped -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</p>
 <p>节点用瓦工黑五DC6，移动夜间高峰11W到19W没有任何问题；Trojan西雅图年付小鸡三网直连稳定11W，已经比某些x86软路由香了，宽带跑满没啥意义，主要网络连接表现，周六晚高峰Netflix 秒开 The Old Guard 1080p（主要是灭有4k设备），塞隆姐真帅！</p>
-<pre><code class=language-{r} data-lang={r}>其他补遗：
+<pre tabindex=0><code class=language-{r} data-lang={r}>其他补遗：
 #!/bin/bash
 # 停止所有的容器
 docker stop $(docker ps -a -q)

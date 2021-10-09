@@ -65,7 +65,7 @@ Copyright
 <p>
 <p>热图问题，会持续更新</p>
 <p>热图算是一个比较多的需求，基础使用上手比较快，但是想要美化的满意，需要下一番功夫。 这里使用 pheatmap 来画图</p>
-<pre><code class=language-{r} data-lang={r}>library(pheatmap)
+<pre tabindex=0><code class=language-{r} data-lang={r}>library(pheatmap)
 library(AnnoProbe)
 ls(&quot;package:AnnoProbe&quot;) # 查看包自带数据和函数
 ex&lt;-GSE95166$genes_expr
@@ -128,7 +128,7 @@ p2&lt;-pheatmap(n,
 </code></pre><div align=center>
 <img src=https://i.loli.net/2020/04/20/8OlkC5GDU7Jet9m.jpg width=80% alt=heatmap align=center>
 </div>
-<pre><code class=language-{r} data-lang={r}># 保存数据
+<pre tabindex=0><code class=language-{r} data-lang={r}># 保存数据
 result&lt;-n[order_row,order_col]
 # 按照热图的顺序，导出作图数据；
 result = data.frame(rownames(result),result)

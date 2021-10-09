@@ -81,7 +81,7 @@ Copyright
 <h4 id=12-分别为两个仓库绑定-ssh-key>1.2 分别为两个仓库绑定 SSH Key</h4>
 <p>当通过Git提交源码之后，Github Actions会编译生成静态文件并通过Git Push到 yourID.github.io的发布仓库，这一步需要 Git 账户认证，因此你需要先设定公匙（Public Key）和私匙（Private Key）。
 在你电脑的Terminal窗口进行操作</p>
-<pre><code class=language-{bash} data-lang={bash}>git config --global  --list
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git config --global  --list
 git config --global user.name &quot;xxx&quot; # 你的github用户名
 git config --global user.email &quot;xxx@gmail.com&quot; # 你的github邮箱
 ssh-keygen -t rsa -b 4096 -C &quot;xxx@gmail.com&quot;  # 记得替换成你的邮箱
@@ -97,7 +97,7 @@ ssh-keygen -t rsa -b 4096 -C &quot;xxx@gmail.com&quot;  # 记得替换成你的�
 <p>将 yourID.github.io.source 仓源码库克隆到本地，并用你安装的或者Rstudio初始化Hugo；
 现将步骤罗列如下；</p>
 <h4 id=21-如果你用的是rstudio>2.1 如果你用的是Rstudio</h4>
-<pre><code class=language-{r} data-lang={r}>install.packages(&quot;devtools&quot;)
+<pre tabindex=0><code class=language-{r} data-lang={r}>install.packages(&quot;devtools&quot;)
 devtools::install_github(&quot;rstudio/blogdown&quot;)
 blogdown::install_hugo()
 blogdown::hugo_version()
@@ -116,7 +116,7 @@ blogdown::hugo_version()
 <p>然后用Rstudio上的Build按钮查看拥有even主题的Hugo博客。</p>
 <h5 id=211-hugo博客中-configyaml-文件设置>2.1.1 Hugo博客中 config.yaml 文件设置</h5>
 <p>主页的修改以及调整都依赖于config.yaml文件，以下修改为大多数情况下会用到的修改，其他具体请参看对应Hugo主题的配置说明</p>
-<pre><code class=language-{bash} data-lang={bash}>baseURL: /
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>baseURL: /
 languageCode: zh-cn #en-us
 title: xx的博客
 theme: hugo-theme-even
@@ -125,7 +125,7 @@ ignoreErrors: [&quot;error-remote-getjson&quot;]
 ignoreFiles: [&quot;\\.Rmd$&quot;, &quot;\\.Rmarkdown$&quot;, &quot;_cache$&quot;, &quot;\\.knit\\.md$&quot;, &quot;\\.utf8\\.md$&quot;]
 </code></pre><p>修改完之后，Build -> Clean All -> Build All 即可看到运行结果。</p>
 <h4 id=22-如果你不经过rstudio>2.2 如果你不经过Rstudio</h4>
-<pre><code class=language-{bash} data-lang={bash}># 选取一个目录
+<pre tabindex=0><code class=language-{bash} data-lang={bash}># 选取一个目录
 cd ~/Desktop/
   # 克隆 source 仓库
   git clone git@github.com:yourID/yourID.github.io.source.git
@@ -141,14 +141,14 @@ echo 'theme = &quot;beautifulhugo&quot;' &gt;&gt; config.tomlecho 'theme = &quot
 # 此时你就可以运行预览效果
 hugo serve
 </code></pre><h3 id=3-上传本地调试好的hugo博客>3. 上传本地调试好的Hugo博客</h3>
-<pre><code class=language-{bash} data-lang={bash}>git add .
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git add .
 git commit -m &quot;first commit&quot;
 git push -u origin master
 </code></pre><h3 id=4-设置github-actions-自动化发布>4. 设置Github Actions 自动化发布</h3>
 <p>前往 yourID.github.io.source 源码仓库配置Actions，
 Actions -> New workflow
 直接将以下文件贴进去，修改远程仓库即可，其他的基本上不用更新;</p>
-<pre><code class=language-{bash} data-lang={bash}>name: Deploy Hugo Site to Github Pages on Master Branch
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>name: Deploy Hugo Site to Github Pages on Master Branch
 
 on:
   push:
@@ -193,11 +193,11 @@ commit_message: ${{ github.event.head_commit.message }}
 <h4 id=补充-未来如何更新你的主题><em>补充：</em> 未来如何更新你的主题？</h4>
 <p>最简单的方式是克隆你的博客source code 到本地，然后手动删除主题文件夹，再次拉取主题的Github文件即可。
 可能你在Rstudio下的blogdown下预览不成功，但是不要紧，进入public文件夹，直接打开index.html能正常打开预览到博客即可上传你的主题更新；</p>
-<pre><code class=language-{bash} data-lang={bash}>git clone https://github.com/kimcc/hugo-theme-noteworthy.git themes/hugo-theme-noteworthy
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git clone https://github.com/kimcc/hugo-theme-noteworthy.git themes/hugo-theme-noteworthy
 </code></pre><h4 id=补充-如何回退到指定版本的git><em>补充：</em> 如何回退到指定版本的git？</h4>
 <p>打开你项目的 GitHub commit 主页，知道你要回退的commit版本，
 然后命令行操作；</p>
-<pre><code class=language-{bash} data-lang={bash}>git log
+<pre tabindex=0><code class=language-{bash} data-lang={bash}>git log
 git reset --hard &lt;commit ID&gt;
 git push -f origin master
 # git push -f origin &lt;branch name&gt;

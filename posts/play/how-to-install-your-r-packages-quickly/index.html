@@ -64,7 +64,7 @@ Copyright
 <div>
 <p>
 <p>备份升级R迁移R包并不靠谱，Rstudio 自带的Jobs工具很不好用，所以就重新安装一遍几乎所有的R包；</p>
-<pre><code>#设置清华源
+<pre tabindex=0><code>#设置清华源
 options(&quot;repos&quot; = c(CRAN=&quot;https://mirrors.tuna.tsinghua.edu.cn/CRAN/&quot;))
 install.packages(&quot;devtools&quot;)
 library(devtools)
@@ -87,7 +87,7 @@ library(seruat) #如果提示安装miniconda，跳过不要安装
 install.packages(&quot;tidyverse&quot;)
 BiocManager::install(&quot;CancerSubtypes&quot;)
 </code></pre><p>纯粹记录，顺便贴上编译自带MKL的sessionInfo</p>
-<pre><code>R version 4.0.1 (2020-06-06)
+<pre tabindex=0><code>R version 4.0.1 (2020-06-06)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: CentOS Linux 7 (Core)
 

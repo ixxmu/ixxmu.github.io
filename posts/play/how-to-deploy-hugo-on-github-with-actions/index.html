@@ -8,25 +8,25 @@
 <span id=categories><a style=color:#ababab href=../../../categories/%E6%8A%98%E8%85%BE>折腾</a></span></time><div><p><p>其实这是一篇重建博客的文章，新的方式只为更稳定更快更方便更少的调试。</p><p>为何会再次用这个方式部署博客？因为</p><ol><li>Blogdown 生成的博客环境在 Rstudio 中时灵时不灵，我不可能每一次重装都要把 Blogdown <strong>折腾</strong>一遍，真是太过分了；</li><li>Blogdown安装在 <em>CentOS 7</em> 下面有个巨大的坑（这个随后提到如何解决），我就是要避免安装Blogdown，快速开始写字；</li><li>博客写作环境可以更简单点的，虽然用Blogdown+Netfliy+Github你可以成功，但是不够灵活和通用；</li><li>方法都是现成的，要做的就是优化流程；
 开始前你需要了解什么是Github、Actions、gh-pages、Git以及Hugo以及这样折腾下来一套流程对你是不是适用。
 本文主要用来记录这样重建过程。</li></ol><h2 id=详细流程>详细流程</h2><h3 id=1-github-设置>1. Github 设置</h3><h4 id=11-创建两个github仓库>1.1 创建两个GitHub仓库</h4><p>创建名为 yourID.github.io.source 的仓库，我们称之为源码仓库，你也可以将源码仓库设置为 Private，看个人需求。</p><p>创建名为 yourID.github.io 的仓库，我们称之为发布仓库，且只能为public公开；</p><h4 id=12-分别为两个仓库绑定-ssh-key>1.2 分别为两个仓库绑定 SSH Key</h4><p>当通过Git提交源码之后，Github Actions会编译生成静态文件并通过Git Push到 yourID.github.io的发布仓库，这一步需要 Git 账户认证，因此你需要先设定公匙（Public Key）和私匙（Private Key）。
-在你电脑的Terminal窗口进行操作</p><pre tabindex=0><code class=language-{bash} data-lang={bash}>git config --global  --list
+在你电脑的Terminal窗口进行操作</p><pre tabindex=0><code>git config --global  --list
 git config --global user.name &#34;xxx&#34; # 你的github用户名
 git config --global user.email &#34;xxx@gmail.com&#34; # 你的github邮箱
 ssh-keygen -t rsa -b 4096 -C &#34;xxx@gmail.com&#34;  # 记得替换成你的邮箱
 </code></pre><p>你可以为密匙设定密码或者回车跳过，按照Terminal窗口中的位置找到名为<em>id_rsa.pub</em>和<em>id_rsa</em>的文件，用文本工具或者<em>cat</em>命令即可打开浏览，
 然后将以 <strong>pub</strong> 结尾的公匙添加到 yourID.github.io 发布仓库，将<strong>id_rsa</strong>私匙添加到yourID.github.io.source 源码仓库。</p><blockquote><p>在 yourID.github.io.source 源码仓库，将id_rsa添加到 Settings – Secrets，务必命名为 ACTIONS_DEPLOY_KEY；</p></blockquote><blockquote><p>在 yourID.github.io 发布仓库，将id_rsa.pub添加到 Settings – Deploy keys，命名为hugo_keys或其他名字都可以；</p></blockquote><h3 id=2-本地加载hugo并调试运行>2. 本地加载Hugo并调试运行</h3><p>将 yourID.github.io.source 仓源码库克隆到本地，并用你安装的或者Rstudio初始化Hugo；
-现将步骤罗列如下；</p><h4 id=21-如果你用的是rstudio>2.1 如果你用的是Rstudio</h4><pre tabindex=0><code class=language-{r} data-lang={r}>install.packages(&#34;devtools&#34;)
+现将步骤罗列如下；</p><h4 id=21-如果你用的是rstudio>2.1 如果你用的是Rstudio</h4><pre tabindex=0><code>install.packages(&#34;devtools&#34;)
 devtools::install_github(&#34;rstudio/blogdown&#34;)
 blogdown::install_hugo()
 blogdown::hugo_version()
 # 0.78.2
-</code></pre><p>两次新建，分先后顺序，分别为</p><h5 id=新建1>新建1</h5><blockquote><p>File -> New Project -> Version Control -> Git -> Repository URL</p></blockquote><p>Repository URL 请在你的源码仓库查看，一般为形如 <a href=https://github.com/yourID/yourID.github.io.source.git>https://github.com/yourID/yourID.github.io.source.git</a> 的地址，Project Directry name 可以为空；</p><h5 id=新建2>新建2</h5><blockquote><p>File -> New Project -> New Directory -> Website using blogdown -> Directory name</p></blockquote><p>Directory name 不能为空，需要填入自定位的文件夹名称，如001，Hugo Theme 位置填入提前看好的Hugo主题的github位置，如 <a href=https://github.com/olOwOlo/hugo-theme-even>https://github.com/olOwOlo/hugo-theme-even</a> 就填入 olOwOlo/hugo-theme-even，其他默认即可。</p><p>然后用Rstudio上的Build按钮查看拥有even主题的Hugo博客。</p><h5 id=211-hugo博客中-configyaml-文件设置>2.1.1 Hugo博客中 config.yaml 文件设置</h5><p>主页的修改以及调整都依赖于config.yaml文件，以下修改为大多数情况下会用到的修改，其他具体请参看对应Hugo主题的配置说明</p><pre tabindex=0><code class=language-{bash} data-lang={bash}>baseURL: /
+</code></pre><p>两次新建，分先后顺序，分别为</p><h5 id=新建1>新建1</h5><blockquote><p>File -> New Project -> Version Control -> Git -> Repository URL</p></blockquote><p>Repository URL 请在你的源码仓库查看，一般为形如 <a href=https://github.com/yourID/yourID.github.io.source.git>https://github.com/yourID/yourID.github.io.source.git</a> 的地址，Project Directry name 可以为空；</p><h5 id=新建2>新建2</h5><blockquote><p>File -> New Project -> New Directory -> Website using blogdown -> Directory name</p></blockquote><p>Directory name 不能为空，需要填入自定位的文件夹名称，如001，Hugo Theme 位置填入提前看好的Hugo主题的github位置，如 <a href=https://github.com/olOwOlo/hugo-theme-even>https://github.com/olOwOlo/hugo-theme-even</a> 就填入 olOwOlo/hugo-theme-even，其他默认即可。</p><p>然后用Rstudio上的Build按钮查看拥有even主题的Hugo博客。</p><h5 id=211-hugo博客中-configyaml-文件设置>2.1.1 Hugo博客中 config.yaml 文件设置</h5><p>主页的修改以及调整都依赖于config.yaml文件，以下修改为大多数情况下会用到的修改，其他具体请参看对应Hugo主题的配置说明</p><pre tabindex=0><code>baseURL: /
 languageCode: zh-cn #en-us
 title: xx的博客
 theme: hugo-theme-even
 relativeurls: true 
 ignoreErrors: [&#34;error-remote-getjson&#34;]
 ignoreFiles: [&#34;\\.Rmd$&#34;, &#34;\\.Rmarkdown$&#34;, &#34;_cache$&#34;, &#34;\\.knit\\.md$&#34;, &#34;\\.utf8\\.md$&#34;]
-</code></pre><p>修改完之后，Build -> Clean All -> Build All 即可看到运行结果。</p><h4 id=22-如果你不经过rstudio>2.2 如果你不经过Rstudio</h4><pre tabindex=0><code class=language-{bash} data-lang={bash}># 选取一个目录
+</code></pre><p>修改完之后，Build -> Clean All -> Build All 即可看到运行结果。</p><h4 id=22-如果你不经过rstudio>2.2 如果你不经过Rstudio</h4><pre tabindex=0><code># 选取一个目录
 cd ~/Desktop/
   # 克隆 source 仓库
   git clone git@github.com:yourID/yourID.github.io.source.git
@@ -41,12 +41,12 @@ echo &#39;theme = &#34;beautifulhugo&#34;&#39; &gt;&gt; config.tomlecho &#39;the
 
 # 此时你就可以运行预览效果
 hugo serve
-</code></pre><h3 id=3-上传本地调试好的hugo博客>3. 上传本地调试好的Hugo博客</h3><pre tabindex=0><code class=language-{bash} data-lang={bash}>git add .
+</code></pre><h3 id=3-上传本地调试好的hugo博客>3. 上传本地调试好的Hugo博客</h3><pre tabindex=0><code>git add .
 git commit -m &#34;first commit&#34;
 git push -u origin master
 </code></pre><h3 id=4-设置github-actions-自动化发布>4. 设置Github Actions 自动化发布</h3><p>前往 yourID.github.io.source 源码仓库配置Actions，
 Actions -> New workflow
-直接将以下文件贴进去，修改远程仓库即可，其他的基本上不用更新;</p><pre tabindex=0><code class=language-{bash} data-lang={bash}>name: Deploy Hugo Site to Github Pages on Master Branch
+直接将以下文件贴进去，修改远程仓库即可，其他的基本上不用更新;</p><pre tabindex=0><code>name: Deploy Hugo Site to Github Pages on Master Branch
 
 on:
   push:
@@ -83,9 +83,9 @@ publish_branch: master  # deploying branch
 commit_message: ${{ github.event.head_commit.message }}
 </code></pre><p>然后稍等片刻你会在 <a href=https://yourID.github.io/>https://yourID.github.io/</a> 下看到你的博客内容，和你在本地生产的一样的；</p><p>Hugo的文章内容都保存在content目录下面，所以你之后所有的文章写作和更新其实都是在content文件夹下添加markdown文件，以*.MD<em>或者</em>.RMD*结尾的文件，所以你完全可以只写作内容，然后编译和发布交给Github和Github Actions，这样就方便很多了。</p><p>接着按往常的更新操作即可瞬间更新博客了啊！！！</p><p>WAIT ！！！
 换电脑换环境了怎么，我要重新做一遍么？？？</p><p>其实到这里还有一个非常重要的技能点，用git命令行只更新content文件内容，只对特定文件或文件夹进行pull或者push操作，这样我就可以真正在云端写内容了！</p><p>来看一看效果吧,顺便看下另一篇文章吧，会有收获的！</p><h4 id=补充-未来如何更新你的主题><em>补充：</em> 未来如何更新你的主题？</h4><p>最简单的方式是克隆你的博客source code 到本地，然后手动删除主题文件夹，再次拉取主题的Github文件即可。
-可能你在Rstudio下的blogdown下预览不成功，但是不要紧，进入public文件夹，直接打开index.html能正常打开预览到博客即可上传你的主题更新；</p><pre tabindex=0><code class=language-{bash} data-lang={bash}>git clone https://github.com/kimcc/hugo-theme-noteworthy.git themes/hugo-theme-noteworthy
+可能你在Rstudio下的blogdown下预览不成功，但是不要紧，进入public文件夹，直接打开index.html能正常打开预览到博客即可上传你的主题更新；</p><pre tabindex=0><code>git clone https://github.com/kimcc/hugo-theme-noteworthy.git themes/hugo-theme-noteworthy
 </code></pre><h4 id=补充-如何回退到指定版本的git><em>补充：</em> 如何回退到指定版本的git？</h4><p>打开你项目的 GitHub commit 主页，知道你要回退的commit版本，
-然后命令行操作；</p><pre tabindex=0><code class=language-{bash} data-lang={bash}>git log
+然后命令行操作；</p><pre tabindex=0><code>git log
 git reset --hard &lt;commit ID&gt;
 git push -f origin master
 # git push -f origin &lt;branch name&gt;

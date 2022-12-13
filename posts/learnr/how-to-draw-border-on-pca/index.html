@@ -7,7 +7,7 @@
     <a href=https://github.com/kimcc/hugo-theme-noteworthy target=_blank rel=noopener>Noteworthy</a></span></div><script src=../../../js/main.min.a7205ef73b078c8daed6fe1b0826e8ba229ffabbb69d299d9446cf41f2c7d8aa.js integrity="sha256-pyBe9zsHjI2u1v4bCCbouiKf+ru2nSmdlEbPQfLH2Ko=" crossorigin=anonymous></script></footer></nav><div id=content class=content-container><h1 class=post-title>给PCA画个圈圈儿</h1><time>发表于 January 7, 2021 分类于
 <span id=categories><a style=color:#ababab href=../../../categories/learnr>learnR</a></span></time><div><p><p>给PCA的结果加上轮廓范围</p><h2 id=1了解pca>1.了解PCA</h2><p>今天的主要目的就是给PCA的分组画图画个圈圈儿，对PCA的认识要有一定的基础，如果你不知道何为PCA以及对PCA的结果数据不太明白，强烈推荐补习一下知识。参见生信技能树文章
 <a href=https://mp.weixin.qq.com/s/RMAKwCcD9vklV6a6yZHqXQ><strong>PCA-弱水三千，取哪一瓢饮</strong></a> 和
-<a href=https://cloud.tencent.com/developer/article/1431358><strong>PCA-Statistics is the new sexy!!!</strong></a></p><p>接着认识下PCA的结果，拆解并了解PCA结果构造并画图</p><h2 id=2拆解pca结果>2.拆解PCA结果</h2><p>强烈建议手动运行以下代码</p><pre tabindex=0><code class=language-{r} data-lang={r}>#代码来自这里 https://huboqiang.cn/2016/03/03/RscatterPlotPCA
+<a href=https://cloud.tencent.com/developer/article/1431358><strong>PCA-Statistics is the new sexy!!!</strong></a></p><p>接着认识下PCA的结果，拆解并了解PCA结果构造并画图</p><h2 id=2拆解pca结果>2.拆解PCA结果</h2><p>强烈建议手动运行以下代码</p><pre tabindex=0><code>#代码来自这里 https://huboqiang.cn/2016/03/03/RscatterPlotPCA
 
 head(iris)
 df &lt;- iris
@@ -58,13 +58,13 @@ yy &lt;- grid.arrange(p,nrow=1)
 op &lt;- par(no.readonly=TRUE)
 par(op)
 dev.off()
-</code></pre><h2 id=3给pca结果加上轮廓>3.给PCA结果加上轮廓</h2><p>构造完数据你可以看到用prcomp生成的PCA结果每一部分的作用；</p><pre tabindex=0><code class=language-{r} data-lang={r}>splitData &lt;- split(df_out, df_out$group)
+</code></pre><h2 id=3给pca结果加上轮廓>3.给PCA结果加上轮廓</h2><p>构造完数据你可以看到用prcomp生成的PCA结果每一部分的作用；</p><pre tabindex=0><code>splitData &lt;- split(df_out, df_out$group)
 appliedData &lt;- lapply(splitData, function(df){
   df[chull(df), ]  # chull really is useful, even outside of contrived examples.
 })
 #注意这个split和lapply技巧，chull函数只对前两列起作用；
 combinedData &lt;- do.call(rbind, appliedData)
-</code></pre><pre tabindex=0><code class=language-{r} data-lang={r}>zp3 &lt;- ggplot(data = df_out,
+</code></pre><pre tabindex=0><code>zp3 &lt;- ggplot(data = df_out,
               aes(x = PC1, y = PC2,shape=group,color=group))+
               geom_point(size=3) + 
               theme_bw()
@@ -81,7 +81,7 @@ zp3 &lt;- zp3 + coord_equal()
 library(plotly)
 fig &lt;- ggplotly(zp3) # 这个R包也是棒呆
 fig
-</code></pre><div align=center><img src=https://i.imgur.com/sZMjFz0.png width=85% alt=PCA_border align=center></div><p>执行完以上代码你会发现有个 <strong>chull</strong> 函数，他就是用来统计数据的凸点的位置；参数支持两个拥有两个列的一组数据或者或者两个向量，就是这个函数支持数据框的前两列,这里是满足PCA结果单作图要求的；</p><pre tabindex=0><code class=language-{r} data-lang={r}># chull 函数，统计边界点的值；貌似很有用
+</code></pre><div align=center><img src=https://i.imgur.com/sZMjFz0.png width=85% alt=PCA_border align=center></div><p>执行完以上代码你会发现有个 <strong>chull</strong> 函数，他就是用来统计数据的凸点的位置；参数支持两个拥有两个列的一组数据或者或者两个向量，就是这个函数支持数据框的前两列,这里是满足PCA结果单作图要求的；</p><pre tabindex=0><code># chull 函数，统计边界点的值；貌似很有用
 # NOT RUN {
 X &lt;- matrix(stats::rnorm(2000), ncol = 2)
 chull(X)
@@ -93,7 +93,7 @@ hpts &lt;- chull(X)
 hpts &lt;- c(hpts, hpts[1])
 lines(X[hpts, ])
 # }
-</code></pre><h2 id=4插入圆形轮廓>4.插入圆形轮廓</h2><p>如果你想插入一个圆形轮廓，那继续看这里</p><pre tabindex=0><code class=language-{r} data-lang={r}>p3 &lt;- ggplot(data = df_out,
+</code></pre><h2 id=4插入圆形轮廓>4.插入圆形轮廓</h2><p>如果你想插入一个圆形轮廓，那继续看这里</p><pre tabindex=0><code>p3 &lt;- ggplot(data = df_out,
               aes(x = PC1, y = PC2,shape=group,color=group))+
               geom_point(size=3) + 
               theme_bw()
@@ -105,7 +105,7 @@ zp3 &lt;- p3 +stat_ellipse(geom=&#34;polygon&#34;, aes(fill = group),
                type = &#34;norm&#34;)
 zp3
 ggplotly(zp3)
-</code></pre><div align=center><img src=https://i.imgur.com/lQAxIrb.png width=85% alt=PCA_stat_ellipse align=center></div><p>另外感兴趣的话试试不同参数的圈地范围吧</p><pre tabindex=0><code class=language-{r} data-lang={r}>p3 + stat_ellipse(type = &#34;t&#34;)
+</code></pre><div align=center><img src=https://i.imgur.com/lQAxIrb.png width=85% alt=PCA_stat_ellipse align=center></div><p>另外感兴趣的话试试不同参数的圈地范围吧</p><pre tabindex=0><code>p3 + stat_ellipse(type = &#34;t&#34;)
 p3 + stat_ellipse(type = &#34;norm&#34;)
 p3 + stat_ellipse(type = &#34;euclid&#34;)
 </code></pre><h4 id=参考>参考：</h4><ol><li><a href=https://mp.weixin.qq.com/s/MUr_wcS3c5KFknB2dCCc0g>https://mp.weixin.qq.com/s/MUr_wcS3c5KFknB2dCCc0g</a></li><li><a href=https://huboqiang.cn/2016/03/03/RscatterPlotPCA>https://huboqiang.cn/2016/03/03/RscatterPlotPCA</a></li><li><a href=https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html>https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html</a></li><li><a href=https://plotly.com/ggplot2/geom_polygon/>https://plotly.com/ggplot2/geom_polygon/</a></li></ol></p></div><div class=page-footer><hr class=footer-divider><a class=tag href=../../../tags/r>#R</a>

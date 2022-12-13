@@ -6,7 +6,7 @@
 2022<br><a href=https://gohugo.io target=_blank rel=noopener>Hugo</a> &
     <a href=https://github.com/kimcc/hugo-theme-noteworthy target=_blank rel=noopener>Noteworthy</a></span></div><script src=../../../js/main.min.a7205ef73b078c8daed6fe1b0826e8ba229ffabbb69d299d9446cf41f2c7d8aa.js integrity="sha256-pyBe9zsHjI2u1v4bCCbouiKf+ru2nSmdlEbPQfLH2Ko=" crossorigin=anonymous></script></footer></nav><div id=content class=content-container><h1 class=post-title>重建博客并恢复</h1><time>发表于 June 5, 2020 分类于
 <span id=categories><a style=color:#ababab href=../../../categories/%E6%8A%98%E8%85%BE>折腾</a></span></time><div><p><p>记录恢复博客的过程；博客假设在Github上存放于docs文件夹内，同时使用 <em>Rstudio+Blogdown</em> 书写
-内容会随着时间失效！！！</p><p>content文件夹分类；content、drafts，形如如下的结构；</p><blockquote></blockquote><pre tabindex=0><code class=language-{r} data-lang={r}>|-- about.md  
+内容会随着时间失效！！！</p><p>content文件夹分类；content、drafts，形如如下的结构；</p><blockquote></blockquote><pre tabindex=0><code>|-- about.md  
 |-- archives.md  
 |-- drafts  
 |   |-- CANME  
@@ -19,11 +19,11 @@
 |   |-- play  
 |-- tree.txt  
 5 directories, 6 files  
-</code></pre><p>这是一个文件备份，因为文章只能出现在posts的子文件夹内，所以将文章按照类别分别放在了post下的各个子文件夹内，一是用来分类，二是直接备份文章的markdown原始文件，非常有用；</p><p>让文章处于草稿状态且保持未发布状态时，文件夹里drafts文件夹和posts文件平行的位置，然后只要让文章内暂时不加标签即可，不然，加上标签之后就算首页没有看见，但仍旧会在tags页面显示，所以只能用这种方法隐藏未完成的草稿；</p><p>顺便记录一下删除重建博客的过程：</p><blockquote><p>新建git项目&ndash;删除文件夹内所有内容&ndash;新建blogdown项目&ndash;配置好博客以及主题&ndash;下载备份的content及其内容&ndash;放回到新建的博客位置即可&ndash;重新上传即可完成</p></blockquote><p>新建* .gitignore * 文件并输入以下内容</p><blockquote><p>/*<br>!content<br>!docs</p></blockquote><pre tabindex=0><code class=language-{r} data-lang={r}>git rm -rf --cached .
+</code></pre><p>这是一个文件备份，因为文章只能出现在posts的子文件夹内，所以将文章按照类别分别放在了post下的各个子文件夹内，一是用来分类，二是直接备份文章的markdown原始文件，非常有用；</p><p>让文章处于草稿状态且保持未发布状态时，文件夹里drafts文件夹和posts文件平行的位置，然后只要让文章内暂时不加标签即可，不然，加上标签之后就算首页没有看见，但仍旧会在tags页面显示，所以只能用这种方法隐藏未完成的草稿；</p><p>顺便记录一下删除重建博客的过程：</p><blockquote><p>新建git项目&ndash;删除文件夹内所有内容&ndash;新建blogdown项目&ndash;配置好博客以及主题&ndash;下载备份的content及其内容&ndash;放回到新建的博客位置即可&ndash;重新上传即可完成</p></blockquote><p>新建* .gitignore * 文件并输入以下内容</p><blockquote><p>/*<br>!content<br>!docs</p></blockquote><pre tabindex=0><code>git rm -rf --cached .
 git add .
 git commit -m &#34;rebuild&#34;
 git push
-</code></pre><p>补充 <em>Centos7</em> 下 <em>tree</em> 的使用</p><blockquote><p>yum install -y tree<br>tree<br>tree &ndash;charset=gbk<br>tree &ndash;charset=gbk -L 2<br>tree &ndash;charset=gbk -L 2 > tree.txt<br>#tree 文件夹位置 &ndash;charset=gbk -L 2 > tree.txt</p></blockquote><p>可能用得到的代码</p><pre tabindex=0><code class=language-{r} data-lang={r}>#新建博客
+</code></pre><p>补充 <em>Centos7</em> 下 <em>tree</em> 的使用</p><blockquote><p>yum install -y tree<br>tree<br>tree &ndash;charset=gbk<br>tree &ndash;charset=gbk -L 2<br>tree &ndash;charset=gbk -L 2 > tree.txt<br>#tree 文件夹位置 &ndash;charset=gbk -L 2 > tree.txt</p></blockquote><p>可能用得到的代码</p><pre tabindex=0><code>#新建博客
 blogdown::new_site(
   dir = &#34;xxx&#34;,
   install_hugo = TRUE,

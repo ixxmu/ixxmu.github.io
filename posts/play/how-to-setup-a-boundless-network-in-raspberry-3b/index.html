@@ -6,17 +6,17 @@
 2022<br><a href=https://gohugo.io target=_blank rel=noopener>Hugo</a> &
     <a href=https://github.com/kimcc/hugo-theme-noteworthy target=_blank rel=noopener>Noteworthy</a></span></div><script src=../../../js/main.min.a7205ef73b078c8daed6fe1b0826e8ba229ffabbb69d299d9446cf41f2c7d8aa.js integrity="sha256-pyBe9zsHjI2u1v4bCCbouiKf+ru2nSmdlEbPQfLH2Ko=" crossorigin=anonymous></script></footer></nav><div id=content class=content-container><h1 class=post-title>软路由_树莓派3B设置</h1><time>发表于 July 14, 2020 分类于
 <span id=categories><a style=color:#ababab href=../../../categories/%E6%8A%98%E8%85%BE>折腾</a></span></time><div><p><p>树莓派3B充当旁路由，吃灰未拆封的3B感觉要派上用场了^_^</p><p>主要参考<a href=https://mlapp.cn/376.html><em>这篇文章</em></a>作者编译的有树莓派全系以及x86_64镜像文件，可以自主下载刷机或者作为docker导入使用；</p><p>以下内容针对树莓派3b</p><h3 id=1-刷写树莓派3b的固件>1 刷写树莓派3b的固件；</h3><p><a href=https://github.com/openfans-community-offical/Debian-Pi-Aarch64/blob/master/README_zh.md>固件地址</a>,用的入树莓派爱好者基地的固件；</p><p>刷入过程中非常<strong>不推荐</strong> 那个垃圾的<em>Etcher</em>，任何时候包括但不限于装Windows或者MacOS镜像以及树莓派，Windows用Win32 Disk Imager 完美点亮，安装docker的过程中请使用<strong>大于2A</strong>的充电器给树莓派供电，不然你会遇到安装下载一旦持续几十秒以上会自动关机重启的问题；</p><h3 id=2-安装设置docker>2 安装设置docker</h3><p><a href=https://mlapp.cn/376.html>参考文章</a>
-先开启混杂模式，鉴别你的网卡id</p><pre tabindex=0><code class=language-{r} data-lang={r}>sudo ip link set **eth0** promisc on
+先开启混杂模式，鉴别你的网卡id</p><pre tabindex=0><code>sudo ip link set **eth0** promisc on
 ip addr 
-</code></pre><p>查看ip设置,如 10.211.55.3/24，根据自己的ip进行更改</p><pre tabindex=0><code class=language-{r} data-lang={r}>docker network create -d macvlan --subnet=10.211.55.3/24 --gateway=10.211.55.1 -o parent=eth0 macnet 
-</code></pre><p>获取docker的名称 sulinggg/openwrt:x86_64 ，运行docker</p><pre tabindex=0><code class=language-{r} data-lang={r}>docker run --restart always --name openwrt -d --network macnet --privileged sulinggg/openwrt:x86_64 /sbin/init 
-</code></pre><p>进入容器，修改相应参数，注意识别不同docker镜像命令可能不一样</p><pre tabindex=0><code class=language-{r} data-lang={r}>docker exec -it openwrt bash
+</code></pre><p>查看ip设置,如 10.211.55.3/24，根据自己的ip进行更改</p><pre tabindex=0><code>docker network create -d macvlan --subnet=10.211.55.3/24 --gateway=10.211.55.1 -o parent=eth0 macnet 
+</code></pre><p>获取docker的名称 sulinggg/openwrt:x86_64 ，运行docker</p><pre tabindex=0><code>docker run --restart always --name openwrt -d --network macnet --privileged sulinggg/openwrt:x86_64 /sbin/init 
+</code></pre><p>进入容器，修改相应参数，注意识别不同docker镜像命令可能不一样</p><pre tabindex=0><code>docker exec -it openwrt bash
 #sudo docker exec -it openwrt /bin/sh
-</code></pre><pre tabindex=0><code class=language-{r} data-lang={r}>cat /etc/config/network
+</code></pre><pre tabindex=0><code>cat /etc/config/network
 vi /etc/config/network
-</code></pre><p>具体打开看参照美丽应用的设置即可</p><pre tabindex=0><code class=language-{r} data-lang={r}>/etc/init.d/network restart
+</code></pre><p>具体打开看参照美丽应用的设置即可</p><pre tabindex=0><code>/etc/init.d/network restart
 </code></pre><p>这一步结束之后，你的旁路由大概离已经可以运行了，但是你会发现打开国内网站速度的时候慢的不行，包括淘宝京东优酷等，具体设置接着往下看；</p><h3 id=3-旁路由设置>3 旁路由设置</h3><p>这一步包括3个点</p><ul><li>在接口设置中关闭DHCP，在DHCP/DNS中设置添加国内DNS，具体步骤看<a href=https://blog.sillyson.com/archives/7.html>这里</a>,不用像文章一样修改树莓派本机地址；</li><li>在lan口设置中关闭桥接，并保存；</li><li>最后在防火墙设置中添加语句即可，</li></ul><blockquote><p>iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE</p></blockquote><p>一切保存之后重启路由器docker；再次打开国内APP，完美解决内网图片加载慢闲鱼淘宝慢的问题</p><h3 id=4-其他非必须>4 其他非必须</h3><p>安装 portainer，非必须，树莓派爱好者镜像核一些openwrt是自带docker和portainer管理工具的；
-docker run -d &ndash;name portainer-01 &ndash;restart unless-stopped -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</p><p>节点用瓦工黑五DC6，移动夜间高峰11W到19W没有任何问题；Trojan西雅图年付小鸡三网直连稳定11W，已经比某些x86软路由香了，宽带跑满没啥意义，主要网络连接表现，周六晚高峰Netflix 秒开 The Old Guard 1080p（主要是灭有4k设备），塞隆姐真帅！</p><pre tabindex=0><code class=language-{r} data-lang={r}>其他补遗：
+docker run -d &ndash;name portainer-01 &ndash;restart unless-stopped -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</p><p>节点用瓦工黑五DC6，移动夜间高峰11W到19W没有任何问题；Trojan西雅图年付小鸡三网直连稳定11W，已经比某些x86软路由香了，宽带跑满没啥意义，主要网络连接表现，周六晚高峰Netflix 秒开 The Old Guard 1080p（主要是灭有4k设备），塞隆姐真帅！</p><pre tabindex=0><code>其他补遗：
 #!/bin/bash
 # 停止所有的容器
 docker stop $(docker ps -a -q)

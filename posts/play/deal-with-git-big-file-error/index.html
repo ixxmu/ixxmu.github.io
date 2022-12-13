@@ -5,7 +5,7 @@
 &copy;
 2022<br><a href=https://gohugo.io target=_blank rel=noopener>Hugo</a> &
     <a href=https://github.com/kimcc/hugo-theme-noteworthy target=_blank rel=noopener>Noteworthy</a></span></div><script src=../../../js/main.min.a7205ef73b078c8daed6fe1b0826e8ba229ffabbb69d299d9446cf41f2c7d8aa.js integrity="sha256-pyBe9zsHjI2u1v4bCCbouiKf+ru2nSmdlEbPQfLH2Ko=" crossorigin=anonymous></script></footer></nav><div id=content class=content-container><h1 class=post-title>git 大文件错误</h1><time>发表于 April 14, 2020 分类于
-<span id=categories><a style=color:#ababab href=../../../categories/%E6%8A%98%E8%85%BE>折腾</a></span></time><div><p><p>git 大文件 真垃圾,只能在 .gitignore 中设置忽略，并且如果是在文件夹及其子文件夹中需要设置 *.Rdata 过滤才能生效，最直接的办法就是删除了重新上传本地文件；</p><p>此外，无他，其余纯粹浪费时间……</p><blockquote></blockquote><pre tabindex=0><code class=language-{r} data-lang={r}> git rm -rf --cached .
+<span id=categories><a style=color:#ababab href=../../../categories/%E6%8A%98%E8%85%BE>折腾</a></span></time><div><p><p>git 大文件 真垃圾,只能在 .gitignore 中设置忽略，并且如果是在文件夹及其子文件夹中需要设置 *.Rdata 过滤才能生效，最直接的办法就是删除了重新上传本地文件；</p><p>此外，无他，其余纯粹浪费时间……</p><blockquote></blockquote><pre tabindex=0><code> git rm -rf --cached .
  git rm -rf --cached . path/bigfile
  git add .
  git commit -m &#34;delted big file&#34;
@@ -14,7 +14,7 @@
 将现有的本地代码提交到远程仓库B；
 删除现有的远程仓库A；
 将远程仓库B命名为A；
-更新代码如下</p><pre tabindex=0><code class=language-{r} data-lang={r}>1.Checkout
+更新代码如下</p><pre tabindex=0><code>1.Checkout
 
 git checkout --orphan latest_branch
 

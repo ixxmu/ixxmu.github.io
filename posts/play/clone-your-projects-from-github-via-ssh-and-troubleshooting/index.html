@@ -42,12 +42,13 @@ cd #回到当前用户根目录
 
 # 设置登录配置
 touch /home/rstudio/.ssh/config
+
 Host github.com
 HostName github.com
 User git
 IdentityFile /home/rstudio/.ssh/id_rsa
 
-#最后给与权限，请依照自己的路径修改
+# 最后给与权限，请依照自己的路径修改
 chmod 700  /home/rstudio/.ssh
 chmod 600 /home/rstudio/.ssh/id_rsa
 </code></pre><p><strong>复制公钥</strong>后转到 Github 网站上操作，找到你的个人 Settings ， 在 SSH and GPG keys 选项里添加你的SSH key ，</p><p>将你复制的公钥添加在SSH选项里面，title 任意填写即可，如 vps_user1;此时回到你的命令窗口

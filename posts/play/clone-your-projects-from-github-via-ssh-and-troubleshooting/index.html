@@ -28,7 +28,7 @@ sudo chmod 600 config
 设置你的 GitHub，</p><pre tabindex=0><code>git config --list
 git config --global user.name &#34;ixxmu&#34;
 git config --global user.email &#34;jjliulangjj@gmail.com&#34;
-# 生成 SSH 密钥，
+# 生成 SSH 密钥的时候GitHub要求key需要密码保护，所以记得设置密码
 ssh-keygen -t rsa -b 4096 -C &#34;jjliulangjj@gmail.com&#34;
 # 添加私钥到你的当前运行环境（添加到此session）
 eval &#34;$(ssh-agent -s)&#34;

@@ -13,14 +13,21 @@ Permission denied (publickey).
 fatal: Could not read from remote repository.
 Please make sure you have the correct access rights
 and the repository exists.</p></blockquote><p>提示权限不够，尝试了重新添加SSH key，解决.ssh 相关文件夹或文件权限以及其他网上提供的几乎任何解法，然后搞了快三天，（幸好疫情受困单位不介意封闭在家）</p><p>最后终于在**<a href=https://stackoverflow.com/questions/23766153/git-clone-ssh-permission-denied>这里</a>**发现了问题出现在哪里了；</p><p>仔细看下面的三个链接；</p><blockquote><ol><li>git clone ssh://github.com/username/repository.git # 链接1</li><li>git clone ssh://git@github.com/username/repository.git # 链接2</li><li>git clone <a href=mailto:git@github.com>git@github.com</a>:username/repository.git # 链接3</li></ol></blockquote><p>链接1题主说不能正常使用的链接，提示错误和我的一模一样；然后我就对着拿了链接2试了试，竟然clone成功了；</p><p>我一开始用的链接是链接3形式的命令，且高票答案里的说是正常可用的链接，但是我这里就是通不过，可能以后会发现更好的解法？</p><p>然后用<strong>链接2</strong>形式命令进行操作一切正常了，内心几千万只小马奔腾！！！</p><p>主要问题解决了，还有另外一个问题就是我之前建立的项目如何在本地文件不动的情况下正常更新到Github？</p><p>搜了一番之后就是改HTTPS链接成SSH的形式； 注意后面的链接形式，只有这个才可以；</p><pre tabindex=0><code>git remote set-url origin ssh://git@github.com/username/repository.git
-#可能会用到
-# git init
-# git remote add origin ssh://git@github.com/xxx/psssswd.git # 新文件夹直接添加
-# git remote -v  # git remote remove origin 
 git add -A
 git commit -m &#34;up_breaking&#34;
 # git branch -M main2
 git config --global push.default current
+git push -u origin main
+</code></pre><p>更新的其他命令</p><pre tabindex=0><code>#可能会用到
+cd /yourdir
+git init
+git remote add origin ssh://git@github.com/xxx/psssswd.git # 新文件夹直接添加
+git remote -v 
+# git remote remove origin
+git add -A
+git commit -m &#34;backup&#34;
+ssh-agent bash
+ssh-add /root/.ssh/id_rsa
 git push -u origin main
 </code></pre><p>然后就成功了更新到 Github 了，终于搞定，虽然还有未完成的新坑，但是起码 Github 可用了。</p><p>发现Github 的token验证方式也可以用R包实现链接，随后补上！</p><h4 id=以下可能会用到的命令>以下可能会用到的命令</h4><pre tabindex=0><code># 给普通用户添加sudo权限
 usermod -a -G sudo user

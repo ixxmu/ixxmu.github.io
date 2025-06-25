@@ -7,6 +7,6 @@ categories:
 tags:
   - SSHFS
   - claude
-slug: Over-Engineering 101: How to Turn a 5-Minute Job into an 8-Hour Nightmare
+slug: How to Turn a 5-Minute Job into an 8Hour Nightmare
 draft: no
 ---

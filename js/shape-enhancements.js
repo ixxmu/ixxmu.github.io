@@ -1,4 +1,4 @@
-/* Shape's Blog · Noteworthy enhancements v2.0
+/* Shape's Blog · Noteworthy enhancements v2.2
  * 文章目录、代码复制、图片灯箱、自动/手动明暗模式
  * 不使用第三方 JS 库；所有功能仅在可用的页面上渐进增强。
  */
@@ -18,6 +18,7 @@
     var key = 'shape-blog-theme';
     var modes = ['system', 'light', 'dark'];
     var labels = { system: '自动', light: '浅色', dark: '深色' };
+    var icons = { system: '◐', light: '☀', dark: '☾' };
     var current = 'system';
 
     try {
@@ -30,15 +31,19 @@
       if (mode === 'system') root.removeAttribute('data-shape-theme');
       else root.setAttribute('data-shape-theme', mode);
       if (button) {
-        button.textContent = '◐ ' + labels[mode];
+        button.textContent = icons[mode];
+        button.dataset.mode = mode;
         button.setAttribute('aria-label', '当前外观：' + labels[mode] + '，点击切换外观模式');
-        button.title = '外观：' + labels[mode] + '（点击切换）';
+        button.title = '外观：' + labels[mode] + ' · 点击切换（自动 → 浅色 → 深色）';
       }
     }
 
-    var nav = document.querySelector('nav .nav-menu');
+    // Noteworthy 导航底部有 .footer（社交图标 / 版权信息）。
+    // 外观按钮放在版权信息之后，避免占用主导航链接区域。
+    var sidebar = document.querySelector('nav');
+    var mount = sidebar && (sidebar.querySelector('.footer') || sidebar.querySelector('footer') || sidebar.querySelector('.nav-menu'));
     var button = null;
-    if (nav) {
+    if (mount) {
       button = document.createElement('button');
       button.type = 'button';
       button.className = 'shape-theme-switch';
@@ -47,7 +52,7 @@
         apply(next);
         try { window.localStorage.setItem(key, next); } catch (e) { /* ignore */ }
       });
-      nav.appendChild(button);
+      mount.appendChild(button);
     }
     apply(current);
   }
